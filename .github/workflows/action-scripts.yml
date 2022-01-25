@@ -1,4 +1,4 @@
-name: Using Action scripts
+name: Using GitHub script
 
 on:
   workflow_dispatch:
