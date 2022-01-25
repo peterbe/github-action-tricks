@@ -15,6 +15,9 @@ jobs:
 
       - uses: actions/setup-node@v2
 
+      - name: Debug node
+        run: node --version
+
       - name: Set label based on PR
         id: label-setter
         run: .github/actions-scripts/set-label.js
