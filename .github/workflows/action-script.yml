@@ -11,11 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Debug
-        run: |
-          ls -l
-          tree .github
-          ls -l .github/actions-scripts/set-label.js
+      - uses: actions/checkout@v2
+
       - name: Set label based on PR
         id: label-setter
         run: .github/actions-scripts/set-label.js
