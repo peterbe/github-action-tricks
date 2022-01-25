@@ -15,8 +15,5 @@ jobs:
         uses: actions/github-script@v5.1.0
         with:
           script: |
-            const repo = context.repo
-            console.log("context...")
-            console.log(Object.keys(context))
-            console.log("repo...")
-            console.log(Object.keys(context.repo))
+            const { owner, repo } = context.repo
+            console.log(`The owner of ${repo} is ${owner}`)
