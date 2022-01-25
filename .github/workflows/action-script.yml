@@ -1,7 +1,6 @@
 name: Using Action script
 
 on:
-  workflow_dispatch:
   pull_request:
 
 permissions:
@@ -12,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Debug
+        run: |
+          ls -l .github/actions-scripts/set-label.js
       - name: Set label based on PR
         id: label-setter
         run: .github/actions-scripts/set-label.js
