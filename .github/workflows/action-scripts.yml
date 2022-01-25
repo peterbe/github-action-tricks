@@ -17,4 +17,7 @@ jobs:
         with:
           script: |
             const repo = context.repo
-            console.log(context)
+            console.log("context...")
+            console.log(Object.keys(context))
+            console.log("repo...")
+            console.log(Object.keys(context.repo))
