@@ -13,6 +13,8 @@ jobs:
 
       - name: Debug
         run: |
+          ls -l
+          tree .github
           ls -l .github/actions-scripts/set-label.js
       - name: Set label based on PR
         id: label-setter
