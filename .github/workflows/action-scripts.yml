@@ -1,0 +1,20 @@
+name: Using Action scripts
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+
+permissions:
+  contents: read
+
+jobs:
+  action-scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print something
+        uses: actions/github-script@v5.1.0
+	with:
+	  script: |
+	    const repo = context.repo
+	    console.log(context)
