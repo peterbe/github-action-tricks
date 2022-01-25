@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Print something
         uses: actions/github-script@v5.1.0
-	with:
-	  script: |
-	    const repo = context.repo
-	    console.log(context)
+        with:
+          script: |
+            const repo = context.repo
+            console.log(context)
