@@ -3,8 +3,7 @@
 import { context, getOctokit } from "@actions/github";
 import { setOutput } from "@actions/core";
 
-if (process.env.GITHUB_TOKEN) console.log("GITHUB_TOKEN present");
-else console.log("GITHUB_TOKEN NOT present");
+console.assert(process.env.GITHUB_TOKEN, "GITHUB_TOKEN not present");
 
 const octokit = getOctokit(process.env.GITHUB_TOKEN);
 
@@ -17,9 +16,15 @@ async function labelPullRequest(config) {
     payload: { number },
   } = context;
 
-  console.log(context);
-  console.log(Object.keys(context));
+  // console.log(context);
+  // console.log(Object.keys(context));
+  // console.log({ number });
   console.assert(number, "number not present");
+  console.log({
+    owner,
+    repo,
+    issue_number: number,
+  });
   //   await octokit.rest.issues.update({
   //     owner,
   //     repo,
