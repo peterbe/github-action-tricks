@@ -3,6 +3,8 @@
 import { context, getOctokit } from "@actions/github";
 import { setOutput } from "@actions/core";
 
+if (process.env.GITHUB_TOKEN) console.log("GITHUB_TOKEN present");
+else console.log("GITHUB_TOKEN NOT present");
 const octokit = getOctokit();
 
 main();
