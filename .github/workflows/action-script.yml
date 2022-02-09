@@ -15,6 +15,9 @@ jobs:
 
       - uses: actions/setup-node@v2
 
+      - name: Install Node dependencies
+        run: npm install --no-save @actions/core @actions/github
+
       - name: Set label based on PR
         id: label-setter
         run: .github/actions-scripts/set-label.mjs
