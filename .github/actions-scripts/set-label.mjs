@@ -3,7 +3,7 @@
 import { context, getOctokit } from "@actions/github";
 import { setOutput } from "@actions/core";
 
-const octokit = getOctokit();
+const octokit = getOctokit(process.env.GITHUB_TOKEN);
 
 main();
 
