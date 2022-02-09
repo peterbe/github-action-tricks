@@ -20,6 +20,8 @@ jobs:
 
       - name: Set label based on PR
         id: label-setter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: .github/actions-scripts/set-label.mjs
 
       - name: Debug what the step above did

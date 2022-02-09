@@ -3,7 +3,7 @@
 import { context, getOctokit } from "@actions/github";
 import { setOutput } from "@actions/core";
 
-const octokit = getOctokit(process.env.GITHUB_TOKEN);
+const octokit = getOctokit();
 
 main();
 
@@ -17,6 +17,13 @@ async function labelPullRequest(config) {
   //     issue_number: config.issue_number,
   //     labels: config.labels,
   //   });
+  console.log(
+    await octokit.rest.issues.listLabelsOnIssue({
+      owner,
+      repo,
+      issue_number: config.issue_number,
+    })
+  );
 }
 
 async function main() {
