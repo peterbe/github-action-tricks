@@ -11,9 +11,11 @@ const octokit = getOctokit(process.env.GITHUB_TOKEN);
 main();
 
 async function labelPullRequest(config) {
-  const { owner, repo } = context;
+  const { owner, repo, number } = context;
 
   console.log(context);
+  console.log(Object.keys(context));
+  console.assert(number, "number not present");
   //   await octokit.rest.issues.update({
   //     owner,
   //     repo,
@@ -24,7 +26,7 @@ async function labelPullRequest(config) {
     await octokit.rest.issues.listLabelsOnIssue({
       owner,
       repo,
-      issue_number: config.issue_number,
+      issue_number: number,
     })
   );
 }
