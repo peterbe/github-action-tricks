@@ -11,7 +11,11 @@ const octokit = getOctokit(process.env.GITHUB_TOKEN);
 main();
 
 async function labelPullRequest(config) {
-  const { owner, repo, number } = context;
+  const {
+    owner,
+    repo,
+    payload: { number },
+  } = context;
 
   console.log(context);
   console.log(Object.keys(context));
