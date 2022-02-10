@@ -16,5 +16,8 @@ jobs:
 
       - uses: actions/setup-node@v2
 
+      - name: Sample output
+        run: echo '${{ toJSON(github) }}'
+
       - name: Do something
         run: npx lolcatjs
