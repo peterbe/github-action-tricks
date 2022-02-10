@@ -1,0 +1,20 @@
+name: Party like it's 2022
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+
+jobs:
+  party:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/setup-node@v2
+
+      - name: Do something
+        run: npx lolcatjs
