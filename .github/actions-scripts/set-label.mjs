@@ -11,8 +11,8 @@ main();
 
 async function labelPullRequest(config) {
   const {
-    owner,
-    repo,
+    // owner,
+    repo: { owner, repo },
     payload: { number },
   } = context;
 
