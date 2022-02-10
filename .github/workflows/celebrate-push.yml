@@ -16,12 +16,8 @@ jobs:
 
       - uses: actions/setup-node@v2
 
-      - name: Sample output
-        run: echo '${{ toJSON(job) }}'
-
       - name: Install lolcatjs
         run: npm install --no-save lolcatjs
 
       - name: Run lolcatjs
-        run: |
-          cat '${{ toJSON(job) }}' | ./node_modules/.bin/lolcatjs
+        run: ./node_modules/.bin/lolcatjs --help
