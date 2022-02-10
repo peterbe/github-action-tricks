@@ -11,33 +11,16 @@ main();
 
 async function labelPullRequest(config) {
   const {
-    // owner,
     repo: { owner, repo },
     payload: { number },
   } = context;
-
-  // console.log(context);
-  // console.log(Object.keys(context));
-  // console.log({ number });
   console.assert(number, "number not present");
-  console.log({
+  const { data: currentLabels } = await octokit.rest.issues.listLabelsOnIssue({
     owner,
     repo,
     issue_number: number,
   });
-  //   await octokit.rest.issues.update({
-  //     owner,
-  //     repo,
-  //     issue_number: config.issue_number,
-  //     labels: config.labels,
-  //   });
-  console.log(
-    await octokit.rest.issues.listLabelsOnIssue({
-      owner,
-      repo,
-      issue_number: number,
-    })
-  );
+  console.log({ currentLabels });
 }
 
 async function main() {
