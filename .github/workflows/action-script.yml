@@ -18,11 +18,11 @@ jobs:
       - name: Install Node dependencies
         run: npm install --no-save @actions/core @actions/github
 
-      - name: Set label based on PR
-        id: label-setter
+      - name: Gets labels of this PR
+        id: label-getter
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: .github/actions-scripts/get-labels.mjs
 
       - name: Debug what the step above did
-        run: echo "${{ steps.label-setter.outputs.currentLabels }}"
+        run: echo "${{ steps.label-getter.outputs.currentLabels }}"
