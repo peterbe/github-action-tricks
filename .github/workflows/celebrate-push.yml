@@ -1,0 +1,22 @@
+name: Party like it's 2022
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+
+jobs:
+  party:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/setup-node@v2
+
+      - name: Install lolcatjs
+        run: npm install --no-save lolcatjs
+
+      - name: Run lolcatjs
+        run: ./node_modules/.bin/lolcatjs --help
