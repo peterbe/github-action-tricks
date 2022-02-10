@@ -24,4 +24,4 @@ jobs:
 
       - name: Run lolcatjs
         run: |
-          echo '${{ toJSON(job) }}' | ./node_modules/.bin/lolcatjs
+          cat '${{ toJSON(job) }}' | ./node_modules/.bin/lolcatjs
