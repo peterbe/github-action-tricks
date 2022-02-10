@@ -19,5 +19,8 @@ jobs:
       - name: Sample output
         run: echo '${{ toJSON(github) }}'
 
-      - name: Do something
-        run: npx lolcatjs
+      - name: Install lolcatjs
+        run: npm install --no-save lolcatjs
+
+      - name: Run lolcatjs
+        run: lolcatjs --help
