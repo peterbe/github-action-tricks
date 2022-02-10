@@ -9,7 +9,7 @@ const octokit = getOctokit(process.env.GITHUB_TOKEN);
 
 main();
 
-async function labelPullRequest(config) {
+async function getCurrentPRLabels() {
   const {
     repo: { owner, repo },
     payload: { number },
@@ -21,10 +21,10 @@ async function labelPullRequest(config) {
     issue_number: number,
   });
   console.log({ currentLabels });
+  return currentLabels;
 }
 
 async function main() {
-  const label = "my-label";
-  await labelPullRequest([label]);
-  setOutput("myLabel", label);
+  const labels = await getCurrentPRLabels();
+  setOutput("currentLabels", labels);
 }

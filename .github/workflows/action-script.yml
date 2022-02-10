@@ -22,7 +22,7 @@ jobs:
         id: label-setter
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: .github/actions-scripts/set-label.mjs
+        run: .github/actions-scripts/get-labels.mjs
 
       - name: Debug what the step above did
-        run: echo "${{ steps.label-setter.outputs.myLabel }}"
+        run: echo "${{ steps.label-setter.outputs.currentLabels }}"
