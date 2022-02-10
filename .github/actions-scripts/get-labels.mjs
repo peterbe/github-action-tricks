@@ -21,7 +21,7 @@ async function getCurrentPRLabels() {
     issue_number: number,
   });
   console.log({ currentLabels });
-  return currentLabels;
+  return currentLabels.map((label) => label.name).join(", ");
 }
 
 async function main() {
