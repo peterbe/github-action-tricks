@@ -23,4 +23,8 @@ jobs:
         run: npm install --no-save lolcatjs
 
       - name: Run lolcatjs
-        run: lolcatjs --help
+        run: |
+          ls -l
+          ls -l node_modules
+          ls -l node_modules/.bin
+          lolcatjs --help
