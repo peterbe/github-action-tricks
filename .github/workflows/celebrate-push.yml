@@ -19,15 +19,9 @@ jobs:
       - name: Sample output
         run: echo '${{ toJSON(job) }}'
 
-      - name: Sample output 2
-        run: echo '${{ toJSON(steps) }}'
-
       - name: Install lolcatjs
         run: npm install --no-save lolcatjs
 
       - name: Run lolcatjs
         run: |
-          ls -l
-          ls -l node_modules
-          ls -l node_modules/.bin
-          ./node_modules/.bin/lolcatjs --help
+          echo '${{ toJSON(job) }}' | ./node_modules/.bin/lolcatjs
