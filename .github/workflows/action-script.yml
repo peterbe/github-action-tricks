@@ -1,0 +1,28 @@
+name: Using Action script
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  action-scripts:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+
+      - name: Install Node dependencies
+        run: npm install --no-save @actions/core @actions/github
+
+      - name: Gets labels of this PR
+        id: label-getter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: .github/actions-scripts/get-labels.mjs
+
+      - name: Debug what the step above did
+        run: echo "${{ steps.label-getter.outputs.currentLabels }}"
