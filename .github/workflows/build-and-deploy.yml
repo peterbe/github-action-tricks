@@ -1,0 +1,28 @@
+name: Build and Deploy stuff
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build-stuff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print something
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { owner, repo } = context.repo
+            console.log(`The owner of ${repo} is ${owner}`)
+
+  deploy-stuff:
+    needs: build-stuff
+    runs-on: ubuntu-latest
+    steps:
+      - name: Do something
+        run: sleep 10
