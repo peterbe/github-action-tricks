@@ -24,7 +24,7 @@ jobs:
         run: sleep 5
 
       - name: Info about this workflow run
-        run: echo "${{ toJSON(github.event.pull_request) }}"
+        run: echo '${{ toJSON(github.event.pull_request) }}'
 
       - name: Only if auto-merge is enabled
         if: ${{ github.event.pull_request.auto_merge }}
