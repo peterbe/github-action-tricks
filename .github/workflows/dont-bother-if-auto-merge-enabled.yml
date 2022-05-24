@@ -23,4 +23,7 @@ jobs:
       - name: Slight delay
         run: sleep 1
       - name: Info about this workflow run
-        run: echo ${{ toJSON(github.event.pull_request) }}
+        run: echo "${{ toJSON(github.event.pull_request) }}"
+
+      - name: Deliberately fail
+        run: exit 1
