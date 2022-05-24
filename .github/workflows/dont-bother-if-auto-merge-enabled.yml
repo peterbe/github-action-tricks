@@ -21,9 +21,15 @@ jobs:
             const { owner, repo } = context.repo
             console.log(`The owner of ${repo} is ${owner}`)
       - name: Slight delay
-        run: sleep 1
-      - name: Info about this workflow run
-        run: echo "${{ toJSON(github.event.pull_request) }}"
+        run: sleep 5
 
-      - name: Deliberately fail
-        run: exit 1
+      - name: Info about this workflow run
+        run: echo '${{ toJSON(github.event.pull_request) }}'
+
+      - name: Only if auto-merge is enabled
+        if: ${{ github.event.pull_request.auto_merge }}
+        run: echo "Auto-merge IS ENABLED"
+
+      - name: Only if auto-merge is NOT enabled
+        if: ${{ !github.event.pull_request.auto_merge }}
+        run: echo "Auto-merge is NOT enabled"
