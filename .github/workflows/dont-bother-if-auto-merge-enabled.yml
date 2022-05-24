@@ -1,0 +1,29 @@
+name: Don't bother if auto-merge is enabled
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+     branches:
+       - main
+
+permissions:
+  contents: read
+
+jobs:
+  do-things:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print something
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { owner, repo } = context.repo
+            console.log(`The owner of ${repo} is ${owner}`)
+      - name: Slight delay
+        run: sleep 1
+      - name: Info about this workflow run
+        run: echo "${{ toJSON(github.event.pull_request) }}"
+
+      - name: Deliberately fail
+        run: exit 1
