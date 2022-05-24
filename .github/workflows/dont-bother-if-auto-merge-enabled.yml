@@ -33,6 +33,3 @@ jobs:
       - name: Only if auto-merge is NOT enabled
         if: ${{ !github.event.pull_request.auto_merge }}
         run: echo "Auto-merge is NOT enabled"
-
-      - name: Deliberately fail
-        run: exit 2
