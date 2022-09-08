@@ -18,11 +18,12 @@ jobs:
           mkdir buildstuff
           echo 'This file is empty' > buildstuff/file.txt
           echo '' >> buildstuff/file.txt
+	  zip -r buildstuff.zip buildstuff
 
       - uses: actions/upload-artifact@v3
         with:
-          name: buildstuff
-          path: buildstuff
+          name: buildstuff.zip
+          path: buildstuff.zip
 
       - uses: peter-evans/repository-dispatch@v2
         with:
