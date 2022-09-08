@@ -22,7 +22,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: buildstuff.zip
+          name: buildstuff
           path: buildstuff.zip
 
       - uses: peter-evans/repository-dispatch@v2
@@ -30,4 +30,4 @@ jobs:
           token: ${{ secrets.PETERBECOM_DISPATCH }}
           repository: peterbe/django-peterbecom
           event-type: ping
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+          # client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
