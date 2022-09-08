@@ -23,3 +23,10 @@ jobs:
         with:
           name: buildstuff
           path: buildstuff
+
+      - uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PETERBECOM_DISPATCH }}
+          repository: peterbe/django-peterbecom
+          event-type: ping
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
