@@ -16,7 +16,8 @@ jobs:
       - name: Make something
         run: |
           mkdir buildstuff
-          touch buildstuff/file.txt
+          echo 'This file is empty' > buildstuff/file.txt
+          echo '' >> buildstuff/file.txt
 
       - uses: actions/upload-artifact@v3
         with:
