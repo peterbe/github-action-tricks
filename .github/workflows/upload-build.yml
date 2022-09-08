@@ -19,12 +19,12 @@ jobs:
           dd if=/dev/zero of=buildstuff/big.file count=1024 bs=1024
           echo 'This file is empty' > buildstuff/file.txt
           echo '' >> buildstuff/file.txt
-          zip -r buildstuff.zip buildstuff
+          # zip -r buildstuff.zip buildstuff
 
       - uses: actions/upload-artifact@v3
         with:
           name: buildstuff
-          path: buildstuff.zip
+          # path: buildstuff.zip
 
       - uses: peter-evans/repository-dispatch@v2
         with:
