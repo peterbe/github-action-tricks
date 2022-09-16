@@ -25,7 +25,7 @@ jobs:
         run: sleep 30
 
       - name: Sleep again
-        run: sleep 30
+        run: sleep 31
 
       - name: Sleep one last time
-        run: sleep 30
+        run: sleep 32
