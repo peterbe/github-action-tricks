@@ -7,6 +7,10 @@ on:
 permissions:
   contents: read
 
+# This allows a subsequently queued workflow run to cancel previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.head_ref }}'
+  cancel-in-progress: true
 
 jobs:
   party:
