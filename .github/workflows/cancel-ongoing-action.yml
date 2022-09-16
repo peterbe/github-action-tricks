@@ -13,10 +13,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  party:
+  sleepyTime:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [en, ja, es]
     steps:
-
       - uses: actions/setup-node@v3.4.1
 
       - name: Install lolcatjs
@@ -26,10 +29,16 @@ jobs:
         run: ./node_modules/.bin/lolcatjs --help
 
       - name: Sleep for a long time
-        run: sleep 31
+        run: |
+          echo ${{ matrix.language }}
+          sleep 31
 
       - name: Sleep again
-        run: sleep 32
+        run: |
+          echo ${{ matrix.language }}
+          sleep 31
 
       - name: Sleep one last time
-        run: sleep 33
+        run: |
+          echo ${{ matrix.language }}
+          sleep 31
