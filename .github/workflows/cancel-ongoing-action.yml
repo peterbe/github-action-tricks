@@ -26,10 +26,10 @@ jobs:
         run: ./node_modules/.bin/lolcatjs --help
 
       - name: Sleep for a long time
-        run: sleep 30
-
-      - name: Sleep again
         run: sleep 31
 
-      - name: Sleep one last time
+      - name: Sleep again
         run: sleep 32
+
+      - name: Sleep one last time
+        run: sleep 33
