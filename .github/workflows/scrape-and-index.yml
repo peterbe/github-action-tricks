@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '*/4 * * * *'
+  workflow_run:
+    workflows: ['Build and Deploy stuff']
+    types:
+      - completed
 
 # permissions:
 #   contents: read
@@ -22,6 +26,14 @@ jobs:
       matrix:
         language: [en, ja, es]
     steps:
+
+      - name: Only if started on workflow_dispatch
+        if: github.event.action == 'ping'
+        run: echo "yes it was run because of a repository_dispatch"
+
+      - name: Debug event
+        run: echo ${{ toJSON(github.event) }}
+
       - name: Sleep a little
         run: sleep 10
       - name: Be sensitive
