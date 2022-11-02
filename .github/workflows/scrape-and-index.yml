@@ -1,6 +1,7 @@
 name: Scrape and index
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '*/4 * * * *'
 
