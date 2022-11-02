@@ -18,7 +18,7 @@ concurrency:
 
 
 jobs:
-  scrape-and-index:
+  preflight:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -39,6 +39,16 @@ jobs:
         if: ${{ github.event.schedule }}
         run: echo "yes it was run because of schedule"
 
+      - name: Set Language
+        id: set-language
+        run: echo "language=${{ matrix.language }}" >> $GITHUB_OUTPUT
+
+  scrape-and-index:
+    needs: preflight
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug language
+        run: echo "${{ steps.set-language.outputs.language }}"
 
       # - name: Happy if parent workflow is happy
       #   if: github.event.action == 'completed'
@@ -70,6 +80,7 @@ jobs:
 
       - name: Sleep a little
         run: sleep 10
+
       - name: Be sensitive
         uses: actions/github-script@v6
         with:
