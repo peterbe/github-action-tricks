@@ -1,0 +1,27 @@
+name: Scrape and index
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+# permissions:
+#   contents: read
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.head_ref }}'
+  cancel-in-progress: true
+
+
+jobs:
+  scrape-and-index:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [en, ja, es]
+    steps:
+      - name: Be sensitive
+        uses: actions/github-script@v6
+        with:
+          script: |
+            if (Math.random()> 0.9) throw new Error("Crash!")
