@@ -52,7 +52,12 @@ jobs:
           script: |
             const fs = require("fs");
             const event = JSON.parse(fs.readFileSync(process.env["GITHUB_EVENT_PATH"]));
-            console.log(JSON.stringify(event, null, 2));
+            const kv = {};
+            for (const [k, v] of Object.entries(event)) {
+              kv[k] = typeof v === 'string' || Array.isArray(v) ? v : Object.keys(v);
+            }
+            //console.log(JSON.stringify(event, null, 2));
+            console.log(JSON.stringify(kv, null, 2));
 
       - name: Sleep a little
         run: sleep 10
