@@ -27,37 +27,46 @@ jobs:
         language: [en, ja, es]
     steps:
 
-      - name: Only if started on workflow_dispatch
-        if: github.event.action == 'completed'
-        run: echo "yes it was run because of a repository_dispatch"
+      - name: Only if started on successful workflow_dispatch
+        if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'success' }}
+        run: echo "yes it was run, successfully, because of a workflow_dispatch"
 
-      - name: Happy if parent workflow is happy
-        if: github.event.action == 'completed'
-        env:
-          CONCLUSION: ${{ github.event.workflow_run.conclusion == 'success' }}
-        run: echo ${{ env.CONCLUSION }}
+      - name: Only if started because of failed workflow_dispatch
+        if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'failure' }}
+        run: echo "yes it was run, but failing, because of a workflow_dispatch"
 
-      - name: Sad if parent workflow is sad
-        if: github.event.action == 'completed'
-        env:
-          CONCLUSION: ${{ github.event.workflow_run.conclusion == 'failure' }}
-        run: echo ${{ env.CONCLUSION }}
+      - name: Only if ran because of schedule
+        if: ${{ github.event.schedule }}
+        run: echo "yes it was run because of schedule"
 
-      - name: Debug event 0
-        run: echo '${{ toJSON(github.event) }}'
 
-      - name: Debug event
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const fs = require("fs");
-            const event = JSON.parse(fs.readFileSync(process.env["GITHUB_EVENT_PATH"]));
-            const kv = {};
-            for (const [k, v] of Object.entries(event)) {
-              kv[k] = typeof v === 'string' || Array.isArray(v) ? v : Object.keys(v);
-            }
-            //console.log(JSON.stringify(event, null, 2));
-            console.log(JSON.stringify(kv, null, 2));
+      # - name: Happy if parent workflow is happy
+      #   if: github.event.action == 'completed'
+      #   env:
+      #     CONCLUSION: ${{ github.event.workflow_run.conclusion == 'success' }}
+      #   run: echo ${{ env.CONCLUSION }}
+
+      # - name: Sad if parent workflow is sad
+      #   if: github.event.action == 'completed'
+      #   env:
+      #     CONCLUSION: ${{ github.event.workflow_run.conclusion == 'failure' }}
+      #   run: echo ${{ env.CONCLUSION }}
+
+      # - name: Debug event 0
+      #   run: echo '${{ toJSON(github.event) }}'
+
+      # - name: Debug event
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       const fs = require("fs");
+      #       const event = JSON.parse(fs.readFileSync(process.env["GITHUB_EVENT_PATH"]));
+      #       const kv = {};
+      #       for (const [k, v] of Object.entries(event)) {
+      #         kv[k] = typeof v === 'string' || Array.isArray(v) ? v : Object.keys(v);
+      #       }
+      #       //console.log(JSON.stringify(event, null, 2));
+      #       console.log(JSON.stringify(kv, null, 2));
 
       - name: Sleep a little
         run: sleep 10
