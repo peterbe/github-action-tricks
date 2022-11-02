@@ -2,7 +2,7 @@ name: Scrape and index
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/4 * * * *'
 
 # permissions:
 #   contents: read
