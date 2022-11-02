@@ -28,4 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Do something
-        run: sleep 26
+        run: sleep 6
+      - name: Be sensitive
+        uses: actions/github-script@v6
+        with:
+          script: |
+            if (Math.random()> 0.9) throw new Error("Crash!")

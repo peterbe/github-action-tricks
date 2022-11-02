@@ -31,6 +31,18 @@ jobs:
         if: github.event.action == 'ping'
         run: echo "yes it was run because of a repository_dispatch"
 
+      - name: Happy if parent workflow is happy
+        if: github.event.action == 'ping'
+        env:
+          CONCLUSION: ${{ github.event.workflow_run.conclusion == 'success' }}
+        run: echo ${{ CONCLUSION }}
+
+      - name: Sad if parent workflow is sad
+        if: github.event.action == 'ping'
+        env:
+          CONCLUSION: ${{ github.event.workflow_run.conclusion == 'failure' }}
+        run: echo ${{ CONCLUSION }}
+
       - name: Debug event
         uses: actions/github-script@v6
         with:
