@@ -17,9 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      max-parallel: 2
       matrix:
         language: [en, ja, es]
     steps:
+      - name: Sleep a little
+        run: sleep 10
       - name: Be sensitive
         uses: actions/github-script@v6
         with:
