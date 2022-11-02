@@ -43,6 +43,9 @@ jobs:
           CONCLUSION: ${{ github.event.workflow_run.conclusion == 'failure' }}
         run: echo ${{ CONCLUSION }}
 
+      - name: Debug event 0
+        run: echo '${{ toJSON(github.event) }}'
+
       - name: Debug event
         uses: actions/github-script@v6
         with:
