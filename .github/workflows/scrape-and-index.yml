@@ -32,7 +32,12 @@ jobs:
         run: echo "yes it was run because of a repository_dispatch"
 
       - name: Debug event
-        run: echo ${{ toJSON(github.event) }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require("fs");
+            const event = JSON.parse(fs.readFileSync(process.env["GITHUB_EVENT_PATH"]));
+            console.log(JSON.stringify(event, null, 2));
 
       - name: Sleep a little
         run: sleep 10
