@@ -28,17 +28,17 @@ jobs:
     steps:
 
       - name: Only if started on workflow_dispatch
-        if: github.event.action == 'ping'
+        if: github.event.action == 'completed'
         run: echo "yes it was run because of a repository_dispatch"
 
       - name: Happy if parent workflow is happy
-        if: github.event.action == 'ping'
+        if: github.event.action == 'completed'
         env:
           CONCLUSION: ${{ github.event.workflow_run.conclusion == 'success' }}
         run: echo ${{ env.CONCLUSION }}
 
       - name: Sad if parent workflow is sad
-        if: github.event.action == 'ping'
+        if: github.event.action == 'completed'
         env:
           CONCLUSION: ${{ github.event.workflow_run.conclusion == 'failure' }}
         run: echo ${{ env.CONCLUSION }}
