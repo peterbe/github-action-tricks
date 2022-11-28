@@ -21,7 +21,7 @@ jobs:
   matrix_maker:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.set-matrix.outputs.result }}
     steps:
 
       # - id: set-matrix
@@ -30,16 +30,22 @@ jobs:
         id: set-matrix
         with:
           script: |
-            if (github.event_name === "workflow_dispatch") {
+            console.log(context)
+            console.log({eventName: context.eventName})
+            if (context.eventName === "workflow_dispatch") {
               return ["ja"]
             }
-            if (github.event === "schedule") {
-              return ["ja", "es"]
-            }
-            if (github.event.action === "completed" && github.event.workflow_run.conclusion == "success") {
-              return ["en"]
-            }
+            //console.log("EVENT", github.event)
+            //if (github.event === "schedule") {
+            //  return ["ja", "es"]
+            //}
+            //if (github.event && github.event.action === "completed" && github.event.workflow_run.conclusion == "success") {
+            //  return ["en"]
+            //}
             return []
+
+      - name: Debug output
+        run: echo "${{ steps.set-matrix.outputs.result }}"
 
       # - name: Only if started on successful workflow_run
       #   id: set-matrix1
