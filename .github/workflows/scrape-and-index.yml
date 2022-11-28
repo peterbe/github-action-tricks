@@ -30,13 +30,15 @@ jobs:
         id: set-matrix
         with:
           script: |
+            console.log("event_name:", github.event_name);
             if (github.event_name === "workflow_dispatch") {
               return ["ja"]
             }
+            console.log("EVENT", github.event)
             if (github.event === "schedule") {
               return ["ja", "es"]
             }
-            if (github.event.action === "completed" && github.event.workflow_run.conclusion == "success") {
+            if (github.event && github.event.action === "completed" && github.event.workflow_run.conclusion == "success") {
               return ["en"]
             }
             return []
