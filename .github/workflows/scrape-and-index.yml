@@ -39,6 +39,11 @@ jobs:
             //if (github.event === "schedule") {
             //  return ["ja", "es"]
             //}
+            if (context.eventName === 'workflow_run') {
+              // XXX Need to figure out if it was run successfully
+              console.log(context.workflow_run)
+              return ["en"]
+            }
             //if (github.event && github.event.action === "completed" && github.event.workflow_run.conclusion == "success") {
             //  return ["en"]
             //}
