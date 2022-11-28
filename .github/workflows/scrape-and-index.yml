@@ -30,7 +30,7 @@ jobs:
         id: set-matrix
         with:
           script: |
-            console.log(context)
+            //
             console.log({eventName: context.eventName})
             if (context.eventName === "workflow_dispatch") {
               return ["ja"]
@@ -46,6 +46,8 @@ jobs:
               return ["en"]
             }
             //return []
+
+            console.log(context)
 
             throw new Error("Unable to find a reason")
 
