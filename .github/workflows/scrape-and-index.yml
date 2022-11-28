@@ -47,7 +47,10 @@ jobs:
             //if (github.event && github.event.action === "completed" && github.event.workflow_run.conclusion == "success") {
             //  return ["en"]
             //}
-            return []
+            //return []
+
+            throw new Error("Unable to find a reason")
+
 
       - name: Debug output
         run: echo "${{ steps.set-matrix.outputs.result }}"
