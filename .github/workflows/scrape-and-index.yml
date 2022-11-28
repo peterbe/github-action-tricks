@@ -20,24 +20,28 @@ concurrency:
 jobs:
   matrix_maker:
     runs-on: ubuntu-latest
-    # outputs:
-    #   matrix: ${{ steps.set-matrix.outputs.matrix }}
+    outputs:
+      matrix: ${{ steps.set-matrix1.outputs.matrix || steps.set-matrix2.outputs.matrix || steps.set-matrix3.outputs.matrix || steps.set-matrix4.outputs.matrix }}
     steps:
       # - id: set-matrix
       #   run: echo "matrix=[\"en\",\"ja\",\"es\"]" >> $GITHUB_OUTPUT
       - name: Only if started on successful workflow_run
+        id: set-matrix1
         if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'success' }}
         run: echo "matrix=[\"en\"]" >> $GITHUB_OUTPUT
 
       - name: Only if started because of failed workflow_run
+        id: set-matrix2
         if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'failure' }}
         run: echo "matrix=[]" >> $GITHUB_OUTPUT
 
       - name: Only if ran because of schedule
+        id: set-matrix3
         if: ${{ github.event.schedule }}
         run: echo "matrix=[\"ja\",\"es\"]" >> $GITHUB_OUTPUT
 
       - name: Only if started on successful workflow_dispatch
+        id: set-matrix4
         if: ${{ github.event_name == 'workflow_dispatch' }}
         run: echo "matrix=[\"en\"]" >> $GITHUB_OUTPUT
 
