@@ -21,7 +21,7 @@ jobs:
   matrix_maker:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.set-matrix.outputs.result }}
     steps:
 
       # - id: set-matrix
@@ -49,6 +49,9 @@ jobs:
             //  return ["en"]
             //}
             return []
+
+      - name: Debug output
+        run: echo "${{ steps.set-matrix.outputs.result }}"
 
       # - name: Only if started on successful workflow_run
       #   id: set-matrix1
