@@ -24,7 +24,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
-        run: echo "matrix={[\"en\",\"ja\",\"es\"]}" >> $GITHUB_OUTPUT
+        run: echo "matrix=[\"en\",\"ja\",\"es\"]" >> $GITHUB_OUTPUT
 
   scrape-and-index:
     needs: matrix_maker
