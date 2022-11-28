@@ -25,12 +25,12 @@ jobs:
     steps:
       # - id: set-matrix
       #   run: echo "matrix=[\"en\",\"ja\",\"es\"]" >> $GITHUB_OUTPUT
-      - name: Only if started on successful workflow_dispatch
+      - name: Only if started on successful workflow_run
         if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'success' }}
         # run: echo "yes it was run, successfully, because of a workflow_dispatch"
         run: echo "matrix=[\"en\"]" >> $GITHUB_OUTPUT
 
-      - name: Only if started because of failed workflow_dispatch
+      - name: Only if started because of failed workflow_run
         if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'failure' }}
         run: echo "matrix=[]" >> $GITHUB_OUTPUT
 
@@ -38,6 +38,12 @@ jobs:
         if: ${{ github.event.schedule }}
         run: echo "matrix=[\"ja\",\"es\"]" >> $GITHUB_OUTPUT
 
+      - name: Only if started on successful workflow_dispatch
+        # if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'success' }}
+        # run: echo "yes it was run, successfully, because of a workflow_dispatch"
+        run: |
+          echo "${{ toJSON(github.event.workflow_dispatch) }}"
+          echo "${{ toJSON(github.event) }}"
 
   scrape-and-index:
     needs: matrix_maker
