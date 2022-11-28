@@ -30,17 +30,11 @@ jobs:
         id: set-matrix
         with:
           script: |
+            console.log(context)
             console.log({eventName: context.eventName})
-            console.log("CONTEXT.workflow", Object.keys(context.workflow))
-            console.log("CONTEXT.action", Object.keys(context.action))
-
-            //console.log("CONTEXT keys", Object.keys(context))
-            //console.log("event_name:", github.event_name);
-            //console.log("Keys:", Object.keys(github));
-
-            //if (github.event_name === "workflow_dispatch") {
-            //  return ["ja"]
-            //}
+            if (context.eventName === "workflow_dispatch") {
+              return ["ja"]
+            }
             //console.log("EVENT", github.event)
             //if (github.event === "schedule") {
             //  return ["ja", "es"]
