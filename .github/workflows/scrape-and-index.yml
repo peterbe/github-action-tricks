@@ -41,7 +41,8 @@ jobs:
             }
             if (context.eventName === 'workflow_run') {
               // XXX Need to figure out if it was run successfully
-              console.log(context.workflow_run)
+              console.log(context.payload.workflow_run)
+              console.log({conclusion: context.payload.workflow_run.conclusion})
               return ["en"]
             }
             //return []
