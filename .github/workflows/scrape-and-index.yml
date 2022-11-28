@@ -44,6 +44,7 @@ jobs:
         run: |
           echo "${{ toJSON(github.event.workflow_dispatch) }}"
           echo "${{ toJSON(github.event) }}"
+          echo "${{  github.event_name }}"
 
   scrape-and-index:
     needs: matrix_maker
