@@ -1,0 +1,133 @@
+name: Post build and deploy
+
+# Should only run when "Build and Deploy stuff" ran successfully on `main`
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - 'Build and Deploy stuff'
+    branches:
+      - main
+    types:
+      - completed
+
+# permissions:
+#   contents: read
+
+# concurrency:
+#   group: '${{ github.workflow }} @ ${{ github.head_ref }}'
+#   cancel-in-progress: true
+
+
+jobs:
+  precondition-check:
+    runs-on: ubuntu-latest
+    outputs:
+      precondition-check: ${{ steps.precondition-check.outputs.result }}
+    steps:
+      - uses: actions/github-script@v6
+        id: precondition-check
+        with:
+          script: |
+            //
+            console.log({eventName: context.eventName})
+            if (context.eventName === "workflow_dispatch") {
+              return true
+            } else if (context.eventName === 'workflow_run') {
+              // XXX Need to figure out if it was run successfully
+              console.log(context.payload.workflow_run)
+              console.log({conclusion: context.payload.workflow_run.conclusion})
+              return true
+            } else {
+              console.log(context)
+            }
+
+            return false
+            throw new Error("Unable to find a reason")
+
+
+      - name: Debug output
+        run: echo "${{ steps.precondition-check.outputs.result }}"
+
+      - name: Happy to do it
+        if: ${{ steps.precondition-check.outputs.result == 'true' }}
+        run: echo "Happy to do it"
+
+      - name: Refuses to do it
+        if: ${{ steps.precondition-check.outputs.result != 'true' }}
+        run: echo "Not going to happen"
+
+
+
+  # scrape-and-index:
+  #   needs: matrix_maker
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     max-parallel: 2
+  #     matrix:
+  #       matrix: ${{ fromJSON(needs.matrix_maker.outputs.matrix) }}
+  #       # language: [en, ja, es]
+  #   steps:
+
+  #     - name: Only if started on successful workflow_run
+  #       if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'success' }}
+  #       run: echo "yes it was run, successfully, because of a workflow_dispatch"
+
+  #     - name: Only if started because of failed workflow_run
+  #       if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'failure' }}
+  #       run: echo "yes it was run, but failing, because of a workflow_run"
+
+  #     - name: Only if ran because of schedule
+  #       if: ${{ github.event.schedule }}
+  #       run: echo "yes it was run because of schedule"
+
+  #     - name: Only if started on a workflow_dispatch
+  #       if: ${{ github.event_name == 'workflow_dispatch' }}
+  #       run: echo "yes it was run because of a workflow_dispatch"
+
+
+  #     # - name: Happy if parent workflow is happy
+  #     #   if: github.event.action == 'completed'
+  #     #   env:
+  #     #     CONCLUSION: ${{ github.event.workflow_run.conclusion == 'success' }}
+  #     #   run: echo ${{ env.CONCLUSION }}
+
+  #     # - name: Sad if parent workflow is sad
+  #     #   if: github.event.action == 'completed'
+  #     #   env:
+  #     #     CONCLUSION: ${{ github.event.workflow_run.conclusion == 'failure' }}
+  #     #   run: echo ${{ env.CONCLUSION }}
+
+  #     # - name: Debug event 0
+  #     #   run: echo '${{ toJSON(github.event) }}'
+
+  #     # - name: Debug event
+  #     #   uses: actions/github-script@v6
+  #     #   with:
+  #     #     script: |
+  #     #       const fs = require("fs");
+  #     #       const event = JSON.parse(fs.readFileSync(process.env["GITHUB_EVENT_PATH"]));
+  #     #       const kv = {};
+  #     #       for (const [k, v] of Object.entries(event)) {
+  #     #         kv[k] = typeof v === 'string' || Array.isArray(v) ? v : Object.keys(v);
+  #     #       }
+  #     #       //console.log(JSON.stringify(event, null, 2));
+  #     #       console.log(JSON.stringify(kv, null, 2));
+
+  #     - name: Exit if NOT 'en' and is workflow_dispatch
+  #       if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'success' }}
+  #       run: exit 0
+
+  #     - name: Sleep a little
+  #       run: sleep 1
+
+  #     - name: Sleep a lot
+  #       run: sleep 10
+
+  #     - name: Be sensitive
+  #       uses: actions/github-script@v6
+  #       with:
+  #         script: |
+  #           if (Math.random() > 0.99) throw new Error("Crash!")
