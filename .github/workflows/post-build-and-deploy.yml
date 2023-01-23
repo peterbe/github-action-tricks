@@ -36,14 +36,14 @@ jobs:
               return true
             } else if (context.eventName === 'workflow_run') {
               // XXX Need to figure out if it was run successfully
-              console.log(context.payload.workflow_run)
-              console.log({conclusion: context.payload.workflow_run.conclusion})
-              return true
+              //console.log(context.payload.workflow_run)
+              //console.log({conclusion: context.payload.workflow_run.conclusion})
+              return context.payload.workflow_run.conclusion === 'success'
             } else {
               console.log(context)
             }
 
-            return false
+            // return false
             throw new Error("Unable to find a reason")
 
 
