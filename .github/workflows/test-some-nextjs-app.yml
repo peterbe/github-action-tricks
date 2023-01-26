@@ -1,0 +1,34 @@
+name: Don't bother if auto-merge is enabled
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test-some-nextjs-app:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install dependencies
+        working-directory: some-nextjs-app
+        run: npm ci
+
+      # - name: Cache nextjs build
+      #   uses: actions/cache@v3.2.3
+      #   with:
+      #     path: .next/cache
+      #     key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-nextjs-
+
+      - name: Run build script
+        working-directory: some-nextjs-app
+        run: npm run build
