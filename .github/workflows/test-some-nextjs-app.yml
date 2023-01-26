@@ -16,6 +16,8 @@ jobs:
         with:
           node-version: 18
           cache: npm
+          cache-dependency-path: some-nextjs-app/package-lock.json
+
 
       - name: Install dependencies
         working-directory: some-nextjs-app
