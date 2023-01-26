@@ -17,9 +17,6 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v3
 
-      - name: Debug
-        run: ls -l some-nextjs-app/package-lock.json
-
       - name: Setup node
         uses: actions/setup-node@v3
         with:
