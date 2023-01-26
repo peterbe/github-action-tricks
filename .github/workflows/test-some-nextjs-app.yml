@@ -20,23 +20,25 @@ jobs:
           cache: npm
           cache-dependency-path: some-nextjs-app/package-lock.json
 
-      - name: Cache whole node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('.github/workflows/test-some-nextjs-app.yml') }}
-
       - name: Install dependencies
         working-directory: some-nextjs-app
         run: npm ci
 
       - name: Cache nextjs build
-        uses: actions/cache@v3.2.3
+        uses: actions/cache@v3
         with:
           path: some-nextjs-app/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('some-nextjs-app/package*.json') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-
+
+      - name: Cache whole all the things
+        uses: actions/cache@v3
+        with:
+          path: |
+            some-nextjs-app/node_modules
+            some-nextjs-app/.next/cache
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('.github/workflows/test-some-nextjs-app.yml') }}
 
 
   test-some-nextjs-app:
@@ -55,6 +57,33 @@ jobs:
           node-version: 18
           cache: npm
           cache-dependency-path: some-nextjs-app/package-lock.json
+
+      - name: Restore all cache
+        id: cached-all
+        uses: actions/cache@v3
+        with:
+          path: |
+            some-nextjs-app/node_modules
+            some-nextjs-app/.next/cache
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('.github/workflows/test-some-nextjs-app.yml') }}
+
+      - name: Debug cached-all?
+        run: echo "${{ steps.cached-all.outputs.cache-hit }}"
+
+      - name: Freak out?
+        if: ${{ steps.cached-all.outputs.cache-hit != 'hit' }}
+        run: |
+          echo "Everybody freak out"
+          exit 1
+
+      - name: Stay cool?
+        if: ${{ steps.cached-all.outputs.cache-hit == 'hit' }}
+        run: |
+          ls -l
+          ls -l some-nextjs-app
+          du -sh some-nextjs-app/node_modules
+          du -sh some-nextjs-app/.next/cache
+
 
       - name: Install dependencies
         working-directory: some-nextjs-app
