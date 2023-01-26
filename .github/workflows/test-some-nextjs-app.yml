@@ -55,8 +55,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: npm
-          cache-dependency-path: some-nextjs-app/package-lock.json
+          # cache: npm
+          # cache-dependency-path: some-nextjs-app/package-lock.json
 
       - name: Restore all cache
         id: cached-all
@@ -79,7 +79,7 @@ jobs:
       - name: Stay cool?
         if: ${{ steps.cached-all.outputs.cache-hit == 'true' }}
         run: |
-          ls -l some-nextjs-app
+          ls -l  some-nextjs-app
           du -sh some-nextjs-app/node_modules
           du -sh some-nextjs-app/.next
 
@@ -104,7 +104,9 @@ jobs:
         working-directory: some-nextjs-app
         env:
           PORT: 3000
-        run: npm run start &
+        run: |
+          ls -lth .next
+          npm run start &
 
       - name: Test with curl
         run: curl --retry-connrefused --retry 3 http://localhost:3000 > /dev/null
