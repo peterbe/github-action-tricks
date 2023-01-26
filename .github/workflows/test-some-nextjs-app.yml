@@ -28,7 +28,7 @@ jobs:
       - name: Cache nextjs build
         uses: actions/cache@v3.2.3
         with:
-          path: .next/cache
+          path: some-nextjs-app/.next/cache
           key: ${{ runner.os }}-${{ matrix.node-version }}-nextjs-${{ hashFiles('package*.json') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.node-version }}-nextjs-
