@@ -7,7 +7,34 @@ permissions:
   contents: read
 
 jobs:
+  warm-up:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: some-nextjs-app/package-lock.json
+
+      - name: Install dependencies
+        working-directory: some-nextjs-app
+        run: npm ci
+
+      - name: Cache nextjs build
+        uses: actions/cache@v3.2.3
+        with:
+          path: some-nextjs-app/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('some-nextjs-app/package*.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
+
+
   test-some-nextjs-app:
+    needs: warm-up
     runs-on: ubuntu-latest
     strategy:
       matrix:
