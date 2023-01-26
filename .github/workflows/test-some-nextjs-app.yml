@@ -55,8 +55,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          # cache: npm
-          # cache-dependency-path: some-nextjs-app/package-lock.json
 
       - name: Restore all cache
         id: cached-all
