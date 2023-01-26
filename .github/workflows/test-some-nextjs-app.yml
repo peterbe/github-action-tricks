@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16, 17, 18, 19]
+        name: ['tom', 'dick', 'harry']
     steps:
       - name: Check out repo
         uses: actions/checkout@v3
@@ -19,7 +19,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
           cache: npm
           cache-dependency-path: some-nextjs-app/package-lock.json
 
@@ -31,10 +31,22 @@ jobs:
         uses: actions/cache@v3.2.3
         with:
           path: some-nextjs-app/.next/cache
-          key: ${{ runner.os }}-${{ matrix.node-version }}-nextjs-${{ hashFiles('some-nextjs-app/package*.json') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('some-nextjs-app/package*.json') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-nextjs-
+            ${{ runner.os }}-nextjs-
 
       - name: Run build script
         working-directory: some-nextjs-app
         run: npm run build
+
+      - name: Start in background
+        working-directory: some-nextjs-app
+        env:
+          PORT: 3000
+        run: npm run start &
+
+      - name: Test with curl
+        run: curl --retry-connrefused --retry 3 http://localhost:3000 > /dev/null
+
+      - name: View by name
+        run: curl http://localhost:3000/${{ matrix.name }}
