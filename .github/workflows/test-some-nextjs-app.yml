@@ -14,6 +14,9 @@ jobs:
         node-version: [16, 18]
     steps:
 
+      - name: Check out repo
+        uses: actions/checkout@v3
+
       - name: Debug
         run: ls -l some-nextjs-app/package-lock.json
 
@@ -22,7 +25,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
-          # cache-dependency-path: some-nextjs-app/package-lock.json
+          cache-dependency-path: some-nextjs-app/package-lock.json
 
       - name: Install dependencies
         working-directory: some-nextjs-app
