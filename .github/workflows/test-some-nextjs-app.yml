@@ -32,6 +32,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-
 
+      - name: Run build script
+        working-directory: some-nextjs-app
+        run: npm run build
+
       - name: Cache whole all the things
         uses: actions/cache@v3
         with:
