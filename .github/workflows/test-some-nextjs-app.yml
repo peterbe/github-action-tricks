@@ -64,7 +64,7 @@ jobs:
         with:
           path: |
             some-nextjs-app/node_modules
-            some-nextjs-app/.next/cache
+            some-nextjs-app/.next
           key: ${{ runner.os }}-node_modules-${{ hashFiles('.github/workflows/test-some-nextjs-app.yml') }}
 
       - name: Debug cached-all?
@@ -79,10 +79,9 @@ jobs:
       - name: Stay cool?
         if: ${{ steps.cached-all.outputs.cache-hit == 'true' }}
         run: |
-          ls -l
           ls -l some-nextjs-app
           du -sh some-nextjs-app/node_modules
-          du -sh some-nextjs-app/.next/cache
+          du -sh some-nextjs-app/.next
 
 
       # - name: Install dependencies
