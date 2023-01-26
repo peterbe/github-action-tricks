@@ -1,4 +1,4 @@
-name: Don't bother if auto-merge is enabled
+name: Test some NextJS app
 
 on:
   pull_request:
