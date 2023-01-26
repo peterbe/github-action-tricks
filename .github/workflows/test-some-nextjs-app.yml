@@ -80,6 +80,7 @@ jobs:
           ls -l  some-nextjs-app
           du -sh some-nextjs-app/node_modules
           du -sh some-nextjs-app/.next
+          ls -l some-nextjs-app/.next
 
 
       # - name: Install dependencies
