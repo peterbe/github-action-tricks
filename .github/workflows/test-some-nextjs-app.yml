@@ -71,13 +71,13 @@ jobs:
         run: echo "${{ steps.cached-all.outputs.cache-hit }}"
 
       - name: Freak out?
-        if: ${{ steps.cached-all.outputs.cache-hit != 'hit' }}
+        if: ${{ steps.cached-all.outputs.cache-hit != 'true' }}
         run: |
           echo "Everybody freak out"
           exit 1
 
       - name: Stay cool?
-        if: ${{ steps.cached-all.outputs.cache-hit == 'hit' }}
+        if: ${{ steps.cached-all.outputs.cache-hit == 'true' }}
         run: |
           ls -l
           ls -l some-nextjs-app
