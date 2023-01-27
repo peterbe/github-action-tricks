@@ -41,8 +41,8 @@ jobs:
         run: echo "${{ needs.precondition-check.outputs.result }}"
       # - name: What was the output from JSON?
       #   run: echo "${{ fromJSON(needs.precondition-check.outputs.result) }}"
-      # - name: All output?
-      #   run: echo "${{ fromJSON(needs.precondition-check.outputs) }}"
+      - name: All output?
+        run: echo "${{ toJSON(needs.precondition-check.outputs) }}"
 
   build:
     needs: precondition-check
@@ -57,3 +57,12 @@ jobs:
 
       - name: Run lolcatjs
         run: ./node_modules/.bin/lolcatjs --help
+
+  was_empty:
+    needs: precondition-check
+    if: ${{ needs.precondition-check.outputs.result == '' }}
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Nothing
+        run: echo "It was empty"
