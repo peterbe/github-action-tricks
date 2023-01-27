@@ -33,7 +33,7 @@ jobs:
 
   build:
     needs: precondition-check
-    if: ${{ steps.precondition-check.outputs.result == 'true' }}
+    if: ${{ needs.precondition-check.outputs.result == 'true' }}
     runs-on: ubuntu-latest
     steps:
 
