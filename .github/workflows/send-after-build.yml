@@ -1,0 +1,46 @@
+name: Send after Build
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - 'Build and Deploy stuff'
+    branches:
+      - main
+    types:
+      - completed
+
+# permissions:
+#   contents: read
+
+jobs:
+  precondition-check:
+    runs-on: ubuntu-latest
+    outputs:
+      precondition-check: ${{ steps.precondition-check.outputs.result }}
+    steps:
+      - uses: actions/github-script@v6
+        id: precondition-check
+        with:
+          script: |
+            if (context.eventName === "workflow_dispatch") {
+              return true;
+            } else if (context.eventName === 'workflow_run') {
+              return context.payload.workflow_run.conclusion === 'success';
+            }
+            console.log(context);
+            throw new Error("Unable to find a reason");
+
+  build:
+    needs: precondition-check
+    if: ${{ steps.precondition-check.outputs.result == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/setup-node@v3
+
+      - name: Install lolcatjs
+        run: npm install --no-save lolcatjs
+
+      - name: Run lolcatjs
+        run: ./node_modules/.bin/lolcatjs --help
