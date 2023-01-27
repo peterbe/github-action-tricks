@@ -59,7 +59,7 @@ jobs:
         run: ./node_modules/.bin/lolcatjs --help
 
   was_empty:
-    needs: precondition-check
+    needs: precondition
     if: ${{ needs.precondition.outputs.result == '' }}
     runs-on: ubuntu-latest
     steps:
