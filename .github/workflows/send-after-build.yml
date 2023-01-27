@@ -14,13 +14,13 @@ on:
 #   contents: read
 
 jobs:
-  precondition-check:
+  precondition:
     runs-on: ubuntu-latest
     outputs:
-      precondition-check: ${{ steps.precondition-check.outputs.result }}
+      precondition: ${{ steps.check.outputs.result }}
     steps:
       - uses: actions/github-script@v6
-        id: precondition-check
+        id: check
         with:
           script: |
             if (context.eventName === "workflow_dispatch") {
@@ -31,22 +31,22 @@ jobs:
             console.log(context);
             throw new Error("Unable to find a reason");
       - name: Debug output
-        run: echo "${{ steps.precondition-check.outputs.result }}"
+        run: echo "${{ steps.check.outputs.result }}"
 
   debugger:
-    needs: precondition-check
+    needs: precondition
     runs-on: ubuntu-latest
     steps:
       - name: What was the output?
-        run: echo "${{ needs.precondition-check.outputs.result }}"
+        run: echo "${{ needs.precondition.outputs.result }}"
       # - name: What was the output from JSON?
       #   run: echo "${{ fromJSON(needs.precondition-check.outputs.result) }}"
       - name: All output?
-        run: echo "${{ toJSON(needs.precondition-check.outputs) }}"
+        run: echo "${{ toJSON(needs.precondition.outputs) }}"
 
   build:
-    needs: precondition-check
-    if: ${{ needs.precondition-check.outputs.result == 'true' }}
+    needs: precondition
+    if: ${{ needs.precondition.outputs.result == 'true' }}
     runs-on: ubuntu-latest
     steps:
 
@@ -60,7 +60,7 @@ jobs:
 
   was_empty:
     needs: precondition-check
-    if: ${{ needs.precondition-check.outputs.result == '' }}
+    if: ${{ needs.precondition.outputs.result == '' }}
     runs-on: ubuntu-latest
     steps:
 
