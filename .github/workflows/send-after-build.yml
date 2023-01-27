@@ -31,7 +31,7 @@ jobs:
             console.log(context);
             throw new Error("Unable to find a reason");
       - name: Debug output
-        run: echo "${{ steps.precondition-check.ouputs.result }}"
+        run: echo "${{ steps.precondition-check.outputs.result }}"
 
   build:
     needs: precondition-check
