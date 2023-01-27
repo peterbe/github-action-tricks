@@ -41,7 +41,7 @@ jobs:
         run: echo "${{ needs.precondition-check.outputs.result }}"
 
   build:
-    needs: precondition
+    needs: precondition-check
     if: ${{ needs.precondition-check.outputs.result == 'true' }}
     runs-on: ubuntu-latest
     steps:
