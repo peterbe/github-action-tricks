@@ -14,7 +14,7 @@ on:
 #   contents: read
 
 jobs:
-  precondition:
+  precondition-check:
     runs-on: ubuntu-latest
     outputs:
       result: ${{ steps.check.outputs.result }}
@@ -34,15 +34,15 @@ jobs:
         run: echo "${{ steps.check.outputs.result }}"
 
   debugger:
-    needs: precondition
+    needs: precondition-check
     runs-on: ubuntu-latest
     steps:
       - name: What was the output?
-        run: echo "${{ needs.precondition.outputs.result }}"
+        run: echo "${{ needs.precondition-check.outputs.result }}"
 
   build:
     needs: precondition
-    if: ${{ needs.precondition.outputs.result == 'true' }}
+    if: ${{ needs.precondition-check.outputs.result == 'true' }}
     runs-on: ubuntu-latest
     steps:
 
