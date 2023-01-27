@@ -17,7 +17,7 @@ jobs:
   precondition:
     runs-on: ubuntu-latest
     outputs:
-      precondition: ${{ steps.check.outputs.result }}
+      result: ${{ steps.check.outputs.result }}
     steps:
       - uses: actions/github-script@v6
         id: check
@@ -39,10 +39,6 @@ jobs:
     steps:
       - name: What was the output?
         run: echo "${{ needs.precondition.outputs.result }}"
-      # - name: What was the output from JSON?
-      #   run: echo "${{ fromJSON(needs.precondition-check.outputs.result) }}"
-      - name: All output?
-        run: echo "${{ toJSON(needs.precondition.outputs) }}"
 
   build:
     needs: precondition
@@ -57,12 +53,3 @@ jobs:
 
       - name: Run lolcatjs
         run: ./node_modules/.bin/lolcatjs --help
-
-  was_empty:
-    needs: precondition
-    if: ${{ needs.precondition.outputs.result == '' }}
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Nothing
-        run: echo "It was empty"
