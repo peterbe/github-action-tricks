@@ -39,10 +39,10 @@ jobs:
     steps:
       - name: What was the output?
         run: echo "${{ needs.precondition-check.outputs.result }}"
-      - name: What was the output from JSON?
-        run: echo "${{ fromJSON(needs.precondition-check.outputs.result) }}"
-      - name: All output?
-        run: echo "${{ fromJSON(needs.precondition-check.outputs) }}"
+      # - name: What was the output from JSON?
+      #   run: echo "${{ fromJSON(needs.precondition-check.outputs.result) }}"
+      # - name: All output?
+      #   run: echo "${{ fromJSON(needs.precondition-check.outputs) }}"
 
   build:
     needs: precondition-check
