@@ -14,17 +14,12 @@ jobs:
     steps:
 
       - uses: actions/checkout@v3
-        # with:
-        #   fetch-depth: 0
 
       - name: List branches
         run: git branch -r
 
       - name: The bug
         run: |
-
-          # git config --global user.name "peterbe"
-          # git config --global user.email "67483024+docubot@users.noreply.github.com"
 
           git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
           git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
@@ -34,25 +29,13 @@ jobs:
           # Edit this very file here
           echo "# Ignore this" >> .github/workflows/dont-create-branches-that-already-exist.yml
 
-          echo "DOES A BRANCH LIKE THAT EXIST IN THE ORIGIN?"
           remotesha=$(git ls-remote --heads origin $branchname)
           if [ -n "$remotesha" ]; then
             # output is not empty, it means the remote branch exists
-            echo "Branch $branchname already exists in `github/docs-internal`. Exiting..."
+            echo "Branch $branchname already exists in 'github/docs-internal'. Exiting..."
             exit 0
           fi
-          echo $remotesha
 
-
-          git checkout -b $branchname
-          # branchCheckout=$(git checkout -b $branchname)
-          echo $?
-
-
-          if ! [[ $? -eq 0 ]]; then
-            echo "Branch $branchname already exists in `github/docs-internal`. Exiting..."
-            exit 0
-          fi
           git add .
           git commit -m "Add decorated OpenAPI schema files"
           git push origin $branchname
