@@ -1,0 +1,37 @@
+name: Don't create branches that already exist
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+
+jobs:
+  create-branch-maybe-baby:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - name: The bug
+        run: |
+
+
+          branchname=openapi-is-great
+
+          branchCheckout=$(git checkout -b $branchname)
+          if ! [[ $? -eq 0 ]]; then
+            echo "Branch $branchname already exists in `github/docs-internal`. Exiting..."
+            exit 0
+          fi
+          git add .
+          git commit -m "Add decorated OpenAPI schema files"
+          git push origin $branchname
+
+      - name: Install lolcatjs
+        run: npm install --no-save lolcatjs
+
+      - name: Run lolcatjs
+        run: ./node_modules/.bin/lolcatjs --help
