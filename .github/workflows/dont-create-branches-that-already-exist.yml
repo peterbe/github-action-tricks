@@ -35,13 +35,14 @@ jobs:
           echo "# Ignore this" >> .github/workflows/dont-create-branches-that-already-exist.yml
 
           echo "DOES A BRANCH LIKE THAT EXIST IN THE ORIGIN?"
-          git ls-remote --heads origin $branchname
-          echo $?
+          remotesha=$(git ls-remote --heads origin $branchname)
+          if [ -n "$remotesha" ]; then
+            # output is not empty, it means the remote branch exists
+            echo "Branch $branchname already exists in `github/docs-internal`. Exiting..."
+            exit 0
+          fi
+          echo $remotesha
 
-          echo "SHOULD NOT EXIST IN THE ORIGN"
-          git ls-remote --heads origin never-ever-heard-of
-          echo $?
-          echo ""
 
           git checkout -b $branchname
           # branchCheckout=$(git checkout -b $branchname)
