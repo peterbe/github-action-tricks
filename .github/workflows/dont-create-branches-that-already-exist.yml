@@ -14,8 +14,8 @@ jobs:
     steps:
 
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+        # with:
+        #   fetch-depth: 0
 
       - name: List branches
         run: git branch -r
@@ -34,11 +34,18 @@ jobs:
           # Edit this very file here
           echo "# Ignore this" >> .github/workflows/dont-create-branches-that-already-exist.yml
 
+          echo "DOES A BRANCH LIKE THAT EXIST IN THE ORIGIN?"
+          git ls-remote --heads origin $branchname
+
+          echo "SHOULD NOT EXIST IN THE ORIGN"
+          git ls-remote --heads origin never-ever-heard-of
+
+          echo ""
+
           git checkout -b $branchname
           # branchCheckout=$(git checkout -b $branchname)
           echo $?
 
-          git ls-remote --heads origin $branchname
 
           if ! [[ $? -eq 0 ]]; then
             echo "Branch $branchname already exists in `github/docs-internal`. Exiting..."
