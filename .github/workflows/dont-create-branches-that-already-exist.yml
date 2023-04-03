@@ -32,6 +32,7 @@ jobs:
           echo "# Ignore this" >> .github/workflows/dont-create-branches-that-already-exist.yml
 
           branchCheckout=$(git checkout -b $branchname)
+          echo $?
           if ! [[ $? -eq 0 ]]; then
             echo "Branch $branchname already exists in `github/docs-internal`. Exiting..."
             exit 0
