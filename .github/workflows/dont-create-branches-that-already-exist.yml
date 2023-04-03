@@ -18,6 +18,8 @@ jobs:
       - name: The bug
         run: |
 
+          git config --global user.name "docubot"
+          git config --global user.email "67483024+docubot@users.noreply.github.com"
 
           branchname=openapi-is-great
 
