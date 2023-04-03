@@ -38,6 +38,8 @@ jobs:
           # branchCheckout=$(git checkout -b $branchname)
           echo $?
 
+          git ls-remote --heads origin $branchname
+
           if ! [[ $? -eq 0 ]]; then
             echo "Branch $branchname already exists in `github/docs-internal`. Exiting..."
             exit 0
