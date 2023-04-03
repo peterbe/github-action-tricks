@@ -36,10 +36,11 @@ jobs:
 
           echo "DOES A BRANCH LIKE THAT EXIST IN THE ORIGIN?"
           git ls-remote --heads origin $branchname
+          echo $?
 
           echo "SHOULD NOT EXIST IN THE ORIGN"
           git ls-remote --heads origin never-ever-heard-of
-
+          echo $?
           echo ""
 
           git checkout -b $branchname
