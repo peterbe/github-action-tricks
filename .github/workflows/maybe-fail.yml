@@ -31,6 +31,11 @@ jobs:
                 writeFileSync('test.txt', 'test', 'utf-8')
             }
 
+      - name: PING SLACK IF FAILURE
+        if: ${{ failure() }}
+        run:
+            echo "SEND TO SLACK"
+
       - name: Check if file was created
         run: |
             if [ -f test.txt ]; then
