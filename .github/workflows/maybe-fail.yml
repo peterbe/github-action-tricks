@@ -34,7 +34,18 @@ jobs:
       - name: Debug hashFiles
         run: |
             ls -l
-            echo "HASH FILES: ${{ hashFiles('test.txt') }}"
+            echo "HASH FILES: |${{ hashFiles('test.txt') }}|"
+
+      - name: Is file created?
+        if: ${{ hashFiles('test.txt') != '' }}
+        run: |
+            echo "File exists"
+            cat test.txt
+
+      - name: Is file NOT created?
+        if: ${{ hashFiles('test.txt') == '' }}
+        run: |
+            echo "File does NOT exists"
 
     #   - name: Check if file was created
     #     run: |
@@ -46,6 +57,6 @@ jobs:
     #         fi
 
       - name: POST COMMENT IF FILE
-        if: ${{ hashFiles('test.txt') }}
+        if: ${{ hashFiles('test.txt') != '' }}
         run:
             echo "POST A COMMENT"
