@@ -11,23 +11,18 @@ jobs:
   action-scripts:
     runs-on: ubuntu-latest
     steps:
-    #   - name: Set up Python
-    #     uses: actions/setup-python@v4
-    #     with:
-    #       python-version: "3.10"
 
-    #   -
       - name: Print something
         uses: actions/github-script@v6
         with:
           script: |
             const { writeFileSync } = require('fs')
 
-            if (Math.random() > 0.8) {
+            if (Math.random() > 0.85) {
                 throw new Error("Random error")
             }
 
-            if (Math.random() > 0.7) {
+            if (Math.random() > 0.75) {
                 writeFileSync('test.txt', 'test', 'utf-8')
             }
 
