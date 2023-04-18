@@ -44,3 +44,8 @@ jobs:
             else
                 echo "File does not exist"
             fi
+
+      - name: POST COMMENT IF FILE
+        if: ${{ failure() }}
+        run:
+            echo "POST A COMMENT"
