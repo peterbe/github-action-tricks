@@ -18,11 +18,11 @@ jobs:
           script: |
             const { writeFileSync } = require('fs')
 
-            if (Math.random() > 0.85) {
+            if (Math.random() > 0.9) {
                 throw new Error("Random error")
             }
 
-            if (Math.random() > 0.75) {
+            if (Math.random() > 0.6) {
                 writeFileSync('test.txt', 'test', 'utf-8')
             }
 
@@ -31,16 +31,21 @@ jobs:
         run:
             echo "SEND TO SLACK"
 
-      - name: Check if file was created
+      - name: Debug hashFiles
         run: |
-            if [ -f test.txt ]; then
-                echo "File exists"
-                exit 1
-            else
-                echo "File does not exist"
-            fi
+            ls -l
+            echo "HASH FILES: ${{ hashFiles('test.txt') }}"
+
+    #   - name: Check if file was created
+    #     run: |
+    #         if [ -f test.txt ]; then
+    #             echo "File exists"
+    #             exit 1
+    #         else
+    #             echo "File does not exist"
+    #         fi
 
       - name: POST COMMENT IF FILE
-        if: ${{ failure() }}
+        if: ${{ hashFiles('test.txt') }}
         run:
             echo "POST A COMMENT"
