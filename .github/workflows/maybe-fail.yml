@@ -1,0 +1,63 @@
+name: Maybe fail in case of file creation
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  action-scripts:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Print something
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { writeFileSync } = require('fs')
+
+            if (Math.random() > 0.9) {
+                throw new Error("Random error")
+            }
+
+            if (Math.random() > 0.6) {
+                writeFileSync('test.txt', 'test', 'utf-8')
+            }
+
+      - name: PING SLACK IF FAILURE
+        if: ${{ failure() }}
+        run:
+            echo "SEND TO SLACK"
+
+      - name: Debug hashFiles
+        run: |
+            ls -l
+            echo "HASH FILES: |${{ hashFiles('test.txt') }}|"
+
+      - name: Is file created?
+        if: ${{ hashFiles('test.txt') != '' }}
+        run: |
+            echo "File exists"
+            cat test.txt
+
+      - name: Is file NOT created?
+        if: ${{ hashFiles('test.txt') == '' }}
+        run: |
+            echo "File does NOT exists"
+
+
+    #   - name: Check if file was created
+    #     run: |
+    #         if [ -f test.txt ]; then
+    #             echo "File exists"
+    #             exit 1
+    #         else
+    #             echo "File does not exist"
+    #         fi
+
+      - name: POST COMMENT IF FILE
+        if: ${{ hashFiles('test.txt') != '' }}
+        run:
+            echo "POST A COMMENT"
