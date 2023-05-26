@@ -32,7 +32,7 @@ jobs:
 
             console.log("CONTEXT ISSUE", context.issue)
             console.log("PULL REQUEST LABELS", context.payload.pull_request.labels)
-            if (context.payload.pull_request.labels) {
+            if (context.payload.pull_request?.labels) {
               //console.log("PULL REQUEST LABELS", context.payload.pull_request.labels)
               return context.payload.pull_request.labels.map(label => label.name).includes('preview-with-translations')
 
