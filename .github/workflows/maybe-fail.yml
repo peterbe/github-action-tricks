@@ -18,7 +18,7 @@ jobs:
           script: |
             const { writeFileSync } = require('fs')
 
-            if (Math.random() > 0.9) {
+            if (Math.random() > 0.93) {
                 throw new Error("Random error")
             }
 
