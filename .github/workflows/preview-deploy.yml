@@ -2,6 +2,11 @@ name: Preview deploy
 
 on:
   workflow_dispatch:
+    inputs:
+      with_translations:
+        description: 'With translations'
+        required: true
+        type: boolean
   pull_request:
     types:
       - opened
@@ -35,9 +40,7 @@ jobs:
             if (context.payload.pull_request?.labels) {
               //console.log("PULL REQUEST LABELS", context.payload.pull_request.labels)
               return context.payload.pull_request.labels.map(label => label.name).includes('preview-with-translations')
-
             }
-
 
             console.log({eventName: context.eventName})
             //if (context.eventName === "workflow_dispatch") {
