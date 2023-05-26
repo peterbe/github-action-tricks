@@ -21,6 +21,8 @@ jobs:
 
             console.log(context)
 
+            console.log("CONTEXT ISSUE", context.issue)
+
             console.log({eventName: context.eventName})
             //if (context.eventName === "workflow_dispatch") {
             //  console.log("IS workflow_dispatch")
