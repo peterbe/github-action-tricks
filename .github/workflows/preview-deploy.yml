@@ -1,0 +1,24 @@
+name: Using GitHub script
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  preview-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Should we include translations?
+        uses: actions/github-script@v6
+        id: translations
+        with:
+          script: |
+            const { owner, repo } = context.repo
+            console.log(`The owner of ${repo} is ${owner}`)
+            return true
+
+      - name: Get result
+        run: echo "${{steps.translations.outputs.result}}"
