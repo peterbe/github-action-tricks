@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Should we include translations?
         uses: actions/github-script@v6
-        id: translations
+        id: with-translations
         with:
           script: |
             if (process.env.IS_INTERNAL_BUILD !== 'true') return false
@@ -34,36 +34,19 @@ jobs:
               return context.payload.inputs.with_translations === 'true'
             }
 
-            //console.log(context)
-            console.log('-------------------------')
-            console.log("KEYS", Object.keys(context))
-            console.log("KEYS (PAYLOAD)", Object.keys(context.payload))
-            console.log('-------------------------')
-
-
-            console.log("CONTEXT ISSUE", context.issue)
-            console.log("PULL REQUEST LABELS", context.payload.pull_request?.labels)
             if (context.payload.pull_request?.labels) {
-              //console.log("PULL REQUEST LABELS", context.payload.pull_request.labels)
               return context.payload.pull_request.labels.map(label => label.name).includes('preview-with-translations')
             }
-
-            console.log({eventName: context.eventName})
-            //if (context.eventName === "workflow_dispatch") {
-            //  console.log("IS workflow_dispatch")
-            //} else {
-            //  console.log(context)
-            //}
 
             return false
 
       - name: Get result
-        run: echo "${{ steps.translations.outputs.result }}"
+        run: echo "${{ steps.with-translations.outputs.result }}"
 
       - name: DON'T do it
-        if: ${{ steps.translations.outputs.result == 'false' }}
+        if: ${{ steps.with-translations.outputs.result == 'false' }}
         run: echo "Don't do it"
 
       - name: DO it
-        if: ${{ steps.translations.outputs.result == 'true' }}
+        if: ${{ steps.with-translations.outputs.result == 'true' }}
         run: echo "Do it"

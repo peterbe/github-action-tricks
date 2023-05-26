@@ -21,16 +21,16 @@ jobs:
             const { owner, repo } = context.repo
             console.log(`The owner of ${repo} is ${owner}`)
       - name: Slight delay
-        run: sleep 3
+        run: sleep 2
 
   deploy-stuff:
     needs: build-stuff
     runs-on: ubuntu-latest
     steps:
       - name: Do something
-        run: sleep 3
+        run: sleep 2
       - name: Be sensitive
         uses: actions/github-script@v6
         with:
           script: |
-            if (Math.random()> 0.9) throw new Error("Crash!")
+            if (Math.random()> 0.92) throw new Error("Crash!")
