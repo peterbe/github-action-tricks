@@ -20,6 +20,8 @@ permissions:
 jobs:
   preview-deploy:
     runs-on: ubuntu-latest
+    env:
+      IS_INTERNAL_BUILD: ${{ github.repository == 'peterbe/github-action-tricks' }}
     steps:
       - name: Should we include translations?
         uses: actions/github-script@v6
@@ -29,6 +31,8 @@ jobs:
             if (context.eventName === "workflow_dispatch") {
               return context.payload.inputs.with_translations === 'true'
             }
+
+            console.log({IS_INTERNAL_BUILD: process.env.IS_INTERNAL_BUILD})
 
             console.log(context)
             console.log('-------------------------')
