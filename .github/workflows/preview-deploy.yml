@@ -1,0 +1,61 @@
+name: Preview deploy
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
+
+permissions:
+  contents: read
+
+jobs:
+  preview-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Should we include translations?
+        uses: actions/github-script@v6
+        id: translations
+        with:
+          script: |
+            //const { owner, repo } = context.repo
+            //console.log(`The owner of ${repo} is ${owner}`)
+
+            console.log(context)
+            console.log('-------------------------')
+            console.log("KEYS", Object.keys(context))
+            console.log("KEYS (PAYLOAD)", Object.keys(context.payload))
+            console.log('-------------------------')
+
+            console.log("CONTEXT ISSUE", context.issue)
+            console.log("PULL REQUEST LABELS", context.payload.pull_request.labels)
+            if (context.payload.pull_request.labels) {
+              //console.log("PULL REQUEST LABELS", context.payload.pull_request.labels)
+              return context.payload.pull_request.labels.map(label => label.name).includes('preview-with-translations')
+
+            }
+
+
+            console.log({eventName: context.eventName})
+            //if (context.eventName === "workflow_dispatch") {
+            //  console.log("IS workflow_dispatch")
+            //} else {
+            //  console.log(context)
+            //}
+
+            return false
+            //return Math.random() > 0.5
+
+      - name: Get result
+        run: echo "${{ steps.translations.outputs.result }}"
+
+      - name: DON'T do it?
+        if: ${{ steps.translations.outputs.result == 'false' }}
+        run: echo "Don't do it"
+
+      - name: DO it?
+        if: ${{ steps.translations.outputs.result == 'true' }}
+        run: echo "Do it"
