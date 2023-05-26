@@ -7,7 +7,7 @@ on:
         description: 'With translations'
         required: true
         type: boolean
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - synchronize
@@ -28,13 +28,13 @@ jobs:
         id: translations
         with:
           script: |
+            if (process.env.IS_INTERNAL_BUILD !== 'true') return false
+
             if (context.eventName === "workflow_dispatch") {
               return context.payload.inputs.with_translations === 'true'
             }
 
-            console.log({IS_INTERNAL_BUILD: process.env.IS_INTERNAL_BUILD})
-
-            console.log(context)
+            //console.log(context)
             console.log('-------------------------')
             console.log("KEYS", Object.keys(context))
             console.log("KEYS (PAYLOAD)", Object.keys(context.payload))
