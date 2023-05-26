@@ -29,17 +29,18 @@ jobs:
             //const { owner, repo } = context.repo
             //console.log(`The owner of ${repo} is ${owner}`)
 
+            if (context.eventName === "workflow_dispatch") {
+              //console.log("INPUTS", context.inputs)
+              //console.log("INPUTS (PAYLOAD)", context.payload.inputs)
+              return context.payload.inputs.with_translations === 'true'
+            }
+
             console.log(context)
             console.log('-------------------------')
             console.log("KEYS", Object.keys(context))
             console.log("KEYS (PAYLOAD)", Object.keys(context.payload))
             console.log('-------------------------')
 
-            if (context.eventName === "workflow_dispatch") {
-              console.log("INPUTS", context.inputs)
-              console.log("INPUTS (PAYLOAD)", context.payload.inputs)
-              return false
-            }
 
             console.log("CONTEXT ISSUE", context.issue)
             console.log("PULL REQUEST LABELS", context.payload.pull_request?.labels)
