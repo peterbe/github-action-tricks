@@ -35,6 +35,12 @@ jobs:
             console.log("KEYS (PAYLOAD)", Object.keys(context.payload))
             console.log('-------------------------')
 
+            if (context.eventName === "workflow_dispatch") {
+              console.log("INPUTS", context.inputs)
+              console.log("INPUTS (PAYLOAD)", context.payload.inputs)
+              return false
+            }
+
             console.log("CONTEXT ISSUE", context.issue)
             console.log("PULL REQUEST LABELS", context.payload.pull_request?.labels)
             if (context.payload.pull_request?.labels) {
