@@ -31,7 +31,8 @@ jobs:
             console.log('-------------------------')
 
             console.log("CONTEXT ISSUE", context.issue)
-            console.log("CONTEXT pull_request", context.pull_request)
+            console.log("PULL REQUEST LABELS", context.payload.pull_request.labels)
+
 
             console.log({eventName: context.eventName})
             //if (context.eventName === "workflow_dispatch") {
