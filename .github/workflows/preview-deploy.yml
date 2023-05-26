@@ -30,11 +30,3 @@ jobs:
       - name: DO it?
         if: ${{ steps.translations.outputs.result == 'true' }}
         run: echo "Do it"
-
-      - name: DON'T do it? (bool)
-        if: ${{ steps.translations.outputs.result == false }}
-        run: echo "Don't do it"
-
-      - name: DO it? (bool)
-        if: ${{ steps.translations.outputs.result == true }}
-        run: echo "Do it"
