@@ -7,7 +7,7 @@ on:
         description: 'With translations'
         required: true
         type: boolean
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - synchronize
@@ -26,12 +26,7 @@ jobs:
         id: translations
         with:
           script: |
-            //const { owner, repo } = context.repo
-            //console.log(`The owner of ${repo} is ${owner}`)
-
             if (context.eventName === "workflow_dispatch") {
-              //console.log("INPUTS", context.inputs)
-              //console.log("INPUTS (PAYLOAD)", context.payload.inputs)
               return context.payload.inputs.with_translations === 'true'
             }
 
@@ -57,15 +52,14 @@ jobs:
             //}
 
             return false
-            //return Math.random() > 0.5
 
       - name: Get result
         run: echo "${{ steps.translations.outputs.result }}"
 
-      - name: DON'T do it?
+      - name: DON'T do it
         if: ${{ steps.translations.outputs.result == 'false' }}
         run: echo "Don't do it"
 
-      - name: DO it?
+      - name: DO it
         if: ${{ steps.translations.outputs.result == 'true' }}
         run: echo "Do it"
