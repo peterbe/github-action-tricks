@@ -16,8 +16,18 @@ jobs:
         id: translations
         with:
           script: |
-            const { owner, repo } = context.repo
-            console.log(`The owner of ${repo} is ${owner}`)
+            //const { owner, repo } = context.repo
+            //console.log(`The owner of ${repo} is ${owner}`)
+
+            console.log(context)
+
+            console.log({eventName: context.eventName})
+            //if (context.eventName === "workflow_dispatch") {
+            //  console.log("IS workflow_dispatch")
+            //} else {
+            //  console.log(context)
+            //}
+
             return Math.random() > 0.5
 
       - name: Get result
