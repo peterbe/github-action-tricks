@@ -1,4 +1,4 @@
-name: Using GitHub script
+name: Preview deploy
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ jobs:
           script: |
             const { owner, repo } = context.repo
             console.log(`The owner of ${repo} is ${owner}`)
-            return true
+            return Math.random() > 0.5
 
       - name: Get result
         run: echo "${{ steps.translations.outputs.result }}"
@@ -29,4 +29,12 @@ jobs:
 
       - name: DO it?
         if: ${{ steps.translations.outputs.result == 'true' }}
+        run: echo "Do it"
+
+      - name: DON'T do it? (bool)
+        if: ${{ steps.translations.outputs.result == false }}
+        run: echo "Don't do it"
+
+      - name: DO it? (bool)
+        if: ${{ steps.translations.outputs.result == true }}
         run: echo "Do it"
