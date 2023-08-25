@@ -20,10 +20,18 @@ jobs:
           path: .github/screenshots/
 
       - uses: actions/github-script@v6
+        id: figuring-out-what-to-say
         with:
           script: |
             const fs = require('fs')
             console.log(fs.readdirSync('.github/screenshots/'))
+
+      - name: Debug output
+        run: echo "${{ steps.figuring-out-what-to-say.outputs.result }}"
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
