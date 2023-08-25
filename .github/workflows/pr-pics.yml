@@ -14,10 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: screenshots
-          path: .github/screenshots/
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: screenshots
+      #     path: .github/screenshots/
 
       - uses: actions/github-script@v6
         id: figuring-out-what-to-say
@@ -25,6 +25,14 @@ jobs:
           script: |
             const fs = require('fs')
             console.log(fs.readdirSync('.github/screenshots/'))
+            let output = ''
+            for (const fn of fs.readdirSync('.github/screenshots/')) {
+              const imageAsBase64 = fs.readFileSync(fn, 'base64');
+              output += `![${fn}](data:image/png;base64,${imageAsBase64})\n`
+            }
+            # return fs.readdirSync('.github/screenshots/')
+            console.log("TOTAL length of output:", output.length)
+            return output
 
       - name: Debug output
         run: echo "${{ steps.figuring-out-what-to-say.outputs.result }}"
@@ -36,5 +44,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `👋 Right now it's ${new Date()}`
+              body: `👋 ${{ steps.figuring-out-what-to-say.outputs.result }}`
             })
