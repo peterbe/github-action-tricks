@@ -19,23 +19,37 @@ jobs:
       #     name: screenshots
       #     path: .github/screenshots/
 
+      - uses: actions/setup-node@v3.6.0
+
+      - name: Install dependencies
+        run: npm install --no-save sharp pixelmatch
+
       - uses: actions/github-script@v6
         id: figuring-out-what-to-say
         with:
           script: |
             const fs = require('fs')
-            console.log(fs.readdirSync('.github/screenshots/'))
+            const path = require('path')
             let output = ''
-            for (const fn of fs.readdirSync('.github/screenshots/')) {
-              const imageAsBase64 = fs.readFileSync(fn, 'base64');
+            const root = '.github/screenshots/'
+            console.log(fs.readdirSync(root))
+            for (const fn of fs.readdirSync(root)) {
+              const imageAsBase64 = fs.readFileSync(path.join(root, fn), 'base64');
+              output += `## `${fn}`\n`
               output += `![${fn}](data:image/png;base64,${imageAsBase64})\n`
             }
             # return fs.readdirSync('.github/screenshots/')
             console.log("TOTAL length of output:", output.length)
+            fs.writeFileSync('.github/screenshots/comment.md', output)
             return output
 
+      - name: Debug output (file)
+        run: |
+          cat .github/screenshots/comment.md
+
       - name: Debug output
-        run: echo "${{ steps.figuring-out-what-to-say.outputs.result }}"
+        run: |
+          echo "${{ steps.figuring-out-what-to-say.outputs.result }}"
 
       - uses: actions/github-script@v6
         with:
