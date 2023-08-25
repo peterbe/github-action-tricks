@@ -14,9 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: screenshots
+          path: .github/screenshots/
+
       - uses: actions/github-script@v6
         with:
           script: |
+            const fs = require('fs')
+            console.log(fs.readdirSync('.github/screenshots/'))
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
