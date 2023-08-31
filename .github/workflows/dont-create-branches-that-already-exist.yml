@@ -1,0 +1,47 @@
+name: Don't create branches that already exist
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create-branch-maybe-baby:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - name: List branches
+        run: git branch -r
+
+      - name: The bug
+        run: |
+
+          git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+          git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+
+          branchname=openapi-is-great
+
+          # Edit this very file here
+          echo "# Ignore this" >> .github/workflows/dont-create-branches-that-already-exist.yml
+
+          remotesha=$(git ls-remote --heads origin $branchname)
+          if [ -n "$remotesha" ]; then
+            # output is not empty, it means the remote branch exists
+            echo "Branch $branchname already exists in 'github/docs-internal'. Exiting..."
+            exit 0
+          fi
+
+          git add .
+          git commit -m "Add decorated OpenAPI schema files"
+          git push origin $branchname
+
+      - name: Install lolcatjs
+        run: npm install --no-save lolcatjs
+
+      - name: Run lolcatjs
+        run: ./node_modules/.bin/lolcatjs --help
