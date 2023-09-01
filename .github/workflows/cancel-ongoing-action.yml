@@ -20,7 +20,7 @@ jobs:
       matrix:
         language: [en, ja, es]
     steps:
-      - uses: actions/setup-node@v3.7.0
+      - uses: actions/setup-node@v3.8.1
 
       - name: Install lolcatjs
         run: npm install --no-save lolcatjs
