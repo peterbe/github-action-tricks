@@ -26,7 +26,7 @@ jobs:
           fetch_depth: 2
           files: docs/**/*.{md,mdx}
           files_ignore: docs/news/_template.md
-          json: true
+          json: false
 
       - name: Debug what files changed
         env:
