@@ -28,6 +28,10 @@ jobs:
           files_ignore: docs/news/_template.md
           json: false
 
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
       - name: Debug what files changed
         env:
           FILES: ${{ steps.changed-files.outputs.all_changed_files }}
@@ -35,4 +39,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           #ROOT: ../../..
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: echo "${FILES}"
+        run: |
+          echo "${FILES}"
+          python -c "import os; print(repr(os.environ['FILES']))"
