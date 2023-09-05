@@ -24,7 +24,7 @@ jobs:
         uses: tj-actions/changed-files@54849deb963ca9f24185fb5de2965e002d066e6b # pin @v37.0.5
         with:
           fetch_depth: 2
-          files: docs/**/*.md(x)
+          files: docs/**/*.{md,mdx}
           files_ignore: docs/news/_template.md
           json: true
 
