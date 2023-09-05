@@ -28,7 +28,7 @@ jobs:
           files_ignore: docs/news/_template.md
           json: true
 
-      - name: Update db with newest commits of changed files
+      - name: Debug what files changed
         env:
           FILES: ${{ steps.changed-files.outputs.all_changed_files }}
           DELETED_FILES: ${{ steps.changed-files.outputs.deleted_files }}
