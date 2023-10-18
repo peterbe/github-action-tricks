@@ -23,7 +23,7 @@ jobs:
         with:
           script: |
 
+            console.log({EVENT_NAME: context.eventName});
             if (context.eventName === "workflow_run") {
-              console.log("Ran because of workflow_run");
               console.log({CONCLUSION: context.payload.workflow_run.conclusion});
             }
