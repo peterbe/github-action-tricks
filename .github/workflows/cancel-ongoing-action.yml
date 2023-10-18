@@ -38,7 +38,7 @@ jobs:
       - name: Sleep again
         run: |
           echo ${{ matrix.language }}
-          sleep 38
+          sleep 28
 
       - name: Sleep one last time
         run: |
