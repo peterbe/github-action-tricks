@@ -1,0 +1,29 @@
+name: Run after cancel-ongoing-action
+
+on:
+  workflow_run:
+    workflows: ['Cancel ongoing action']
+    types:
+      - completed
+
+permissions:
+  contents: read
+
+
+jobs:
+  run-after-cancel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+
+      - name: Hi there
+        run: date
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+
+            if (context.eventName === "workflow_run") {
+              console.log("Ran because of workflow_run");
+              console.log({CONCLUSION: context.payload.workflow_run.conclusion});
+            }
