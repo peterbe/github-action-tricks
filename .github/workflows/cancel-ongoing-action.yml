@@ -10,7 +10,7 @@ permissions:
 # This allows a subsequently queued workflow run to cancel previous runs
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.head_ref }}'
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   sleepyTime:
@@ -41,4 +41,4 @@ jobs:
       - name: Sleep one last time
         run: |
           echo ${{ matrix.language }}
-          sleep 32
+          sleep 29
