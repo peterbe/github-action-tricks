@@ -2,6 +2,8 @@ name: Cancel ongoing action
 
 on:
   push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -31,12 +33,12 @@ jobs:
       - name: Sleep for a long time
         run: |
           echo ${{ matrix.language }}
-          sleep 30
+          sleep 27
 
       - name: Sleep again
         run: |
           echo ${{ matrix.language }}
-          sleep 31
+          sleep 38
 
       - name: Sleep one last time
         run: |
