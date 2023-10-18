@@ -27,7 +27,7 @@ jobs:
             if (context.eventName === "workflow_run") {
               console.log({CONCLUSION: context.payload.workflow_run.conclusion});
 
-              if (context.payload.workflow_run.conclusion === 'success') {
+              if (context.payload.workflow_run.conclusion !== 'success') {
                 throw new Error("This ran even though the parent workflow completed but wasn't successful")
               }
             }
