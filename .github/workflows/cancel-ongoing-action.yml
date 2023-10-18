@@ -33,7 +33,7 @@ jobs:
       - name: Sleep for a long time
         run: |
           echo ${{ matrix.language }}
-          sleep 27
+          sleep 26
 
       - name: Sleep again
         run: |
