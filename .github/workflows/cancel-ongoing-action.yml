@@ -30,6 +30,14 @@ jobs:
       - name: Run lolcatjs
         run: ./node_modules/.bin/lolcatjs --help
 
+      - name: Randomly fail
+        uses: actions/github-script@v6
+        with:
+          script: |
+            if (Math.random() > 0.90) {
+              throw new Error("Random error")
+            }
+
       - name: Sleep for a long time
         run: |
           echo ${{ matrix.language }}
