@@ -86,6 +86,8 @@ jobs:
         # language: [en, ja, es]
     steps:
 
+      - uses: actions/checkout@v4
+
       - name: Only if started on successful workflow_run
         if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'success' }}
         run: echo "yes it was run, successfully, because of a workflow_dispatch"
