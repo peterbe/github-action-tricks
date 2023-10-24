@@ -12,6 +12,9 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: DEBUG THIS COMPOSITE ACTION
+      shell: bash
+      run: echo "EXAMPLE"
       # uses: someimportantcompany/github-actions-slack-message@1d367080235edfa53df415bd8e0bbab480f29bad
     - name: Send Slack notification if workflow fails
       shell: bash
