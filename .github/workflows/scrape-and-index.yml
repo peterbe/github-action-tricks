@@ -147,7 +147,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            if (Math.random() > 0.99) throw new Error("Crash!")
+            if (Math.random() > 0.59) throw new Error("Crash!")
 
       - uses: ./.github/actions/slack-alert
         with:
