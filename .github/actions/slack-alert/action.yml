@@ -1,0 +1,27 @@
+name: Send Slack notification if workflow fails
+description: Send Slack notification if workflow fails
+
+inputs:
+  slack_channel_id:
+    description: Slack channel ID
+    required: true
+  slack_token:
+    description: Slack token
+    required: true
+
+runs:
+  using: composite
+  steps:
+      # uses: someimportantcompany/github-actions-slack-message@1d367080235edfa53df415bd8e0bbab480f29bad
+    - name: Send Slack notification if workflow fails
+      shell: bash
+      if: >-
+        ${{
+          failure() &&
+          github.repository == 'github/docs-internal' &&
+          github.event_name != 'pull_request' &&
+          github.event_name != 'pull_request_target'
+        }}
+      run: |
+        echo "IF THIS WAS REAL I'D SEND A SLACK NOTIFICATION TO ${{ inputs.slack_channel_id }} using ${{ inputs.slack_token }}"
+        echo "URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

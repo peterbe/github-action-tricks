@@ -146,3 +146,8 @@ jobs:
         with:
           script: |
             if (Math.random() > 0.99) throw new Error("Crash!")
+
+      - uses: ./.github/actions/slack-alert
+        with:
+          slack_channel_id: super-duper-channel
+          slack_token: abc123
