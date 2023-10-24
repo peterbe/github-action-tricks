@@ -88,6 +88,12 @@ jobs:
 
       - uses: actions/checkout@v4
 
+      - name: Be sensitive
+        uses: actions/github-script@v6
+        with:
+          script: |
+            if (Math.random() > 0.50) throw new Error("Crash!")
+
       - name: Only if started on successful workflow_run
         if: ${{ github.event.action == 'completed' && github.event.workflow_run.conclusion == 'success' }}
         run: echo "yes it was run, successfully, because of a workflow_dispatch"
@@ -142,12 +148,6 @@ jobs:
 
       - name: Sleep a lot
         run: sleep 10
-
-      - name: Be sensitive
-        uses: actions/github-script@v6
-        with:
-          script: |
-            if (Math.random() > 0.59) throw new Error("Crash!")
 
       - uses: ./.github/actions/slack-alert
         with:
