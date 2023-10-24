@@ -150,6 +150,7 @@ jobs:
         run: sleep 10
 
       - uses: ./.github/actions/slack-alert
+        if: ${{ failure() }}
         with:
           slack_channel_id: super-duper-channel
           slack_token: abc123
