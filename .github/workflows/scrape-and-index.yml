@@ -86,8 +86,6 @@ jobs:
         # language: [en, ja, es]
     steps:
 
-      - uses: actions/checkout@v4
-
       - name: Be sensitive
         uses: actions/github-script@v6
         with:
@@ -148,6 +146,8 @@ jobs:
 
       - name: Sleep a lot
         run: sleep 10
+
+      - uses: actions/checkout@v4
 
       - uses: ./.github/actions/slack-alert
         if: ${{ failure() }}
