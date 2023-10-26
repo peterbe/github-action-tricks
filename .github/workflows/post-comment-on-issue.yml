@@ -19,4 +19,4 @@ jobs:
           BODY: >
             This issue is available for anyone to work on. **Make sure to reference this issue in
             your pull request.** :sparkles: Thank you for your contribution! :sparkles:
-        run: gh issue comment ${{ github.event.issue.number }} --body "$BODY"
+        run: gh issue comment ${{ github.event.issue.number }} --repo ${{ github.repository }} --body "$BODY"
