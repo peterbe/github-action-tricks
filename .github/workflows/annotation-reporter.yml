@@ -1,0 +1,19 @@
+name: Annotation reporter
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  action-scripts:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+
+      - name: Play
+        run: node src/index.js
