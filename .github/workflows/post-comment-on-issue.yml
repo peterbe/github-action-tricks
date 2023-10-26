@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: Add comment
         env:
+          GH_TOKEN: ${{ github.token }}
           BODY: >
             This issue is available for anyone to work on. **Make sure to reference this issue in
             your pull request.** :sparkles: Thank you for your contribution! :sparkles:
