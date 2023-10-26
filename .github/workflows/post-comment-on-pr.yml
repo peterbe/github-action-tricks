@@ -6,7 +6,7 @@ on:
       - labeled
 
 permissions:
-  contents: read
+  issues: write
 
 jobs:
   post-comment-on-pr:
