@@ -33,4 +33,4 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            if (Math.random()> 0.92) throw new Error("Crash!")
+            if (Math.random()> 0.93) throw new Error("Crash!")
