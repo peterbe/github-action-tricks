@@ -18,6 +18,6 @@ jobs:
       - name: Play
         run: node src/index.js
 
-      - name: Report
-        run: |
-          echo "::error file=src/index.js,line=3,title=Titel::Missing semicolon"
+    #   - name: Report
+    #     run: |
+    #       echo "::error file=src/index.js,line=3,title=Titel::Missing semicolon"
