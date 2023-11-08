@@ -30,6 +30,11 @@ jobs:
         id: set-matrix
         with:
           script: |
+
+            // Do nothing!
+            if (Math.random() > 0.1) {
+              return []
+            }
             //
             console.log({eventName: context.eventName})
             if (context.eventName === "workflow_dispatch") {
