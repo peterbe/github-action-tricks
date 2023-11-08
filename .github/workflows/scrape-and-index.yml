@@ -78,6 +78,7 @@ jobs:
   scrape-and-index:
     needs: matrix_maker
     runs-on: ubuntu-latest
+    if: ${{ needs.matrix_maker.outputs.matrix != '[]' }}
     strategy:
       fail-fast: false
       max-parallel: 2
