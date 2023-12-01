@@ -31,7 +31,7 @@ jobs:
         run: ./node_modules/.bin/lolcatjs --help
 
       - name: Randomly fail
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             if (Math.random() > 0.90) {
