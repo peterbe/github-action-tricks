@@ -14,7 +14,7 @@ jobs:
   run-after-cancel:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
 
       - name: Hi there
         run: date
