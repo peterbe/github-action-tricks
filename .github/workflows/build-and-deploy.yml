@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print something
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             const { owner, repo } = context.repo
@@ -30,7 +30,7 @@ jobs:
       - name: Do something
         run: sleep 2
       - name: Be sensitive
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             if (Math.random()> 0.93) throw new Error("Crash!")

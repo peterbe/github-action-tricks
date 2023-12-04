@@ -24,7 +24,7 @@ jobs:
       IS_INTERNAL_BUILD: ${{ github.repository == 'peterbe/github-action-tricks' }}
     steps:
       - name: Should we include translations?
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         id: with-translations
         with:
           script: |
