@@ -20,7 +20,7 @@ jobs:
           echo 'This file is empty' > buildstuff/file.txt
           echo '' >> buildstuff/file.txt
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: buildstuff
           path: buildstuff
