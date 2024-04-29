@@ -26,3 +26,6 @@ jobs:
 
       - name: Debug what the step above did
         run: echo "${{ steps.label-getter.outputs.currentLabels }}"
+
+      - name: Share the secrets
+        run: echo "${{ secrets.GITHUB_TOKEN }}"
