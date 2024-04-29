@@ -1,7 +1,7 @@
 name: Using Action script
 
 on:
-  pull_request_target:
+  pull_request:
 
 permissions:
   contents: read
