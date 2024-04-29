@@ -7,6 +7,8 @@ console.assert(process.env.GITHUB_TOKEN, "GITHUB_TOKEN not present");
 
 const octokit = getOctokit(process.env.GITHUB_TOKEN);
 
+console.log("running my branch's code", process.env.GITHUB_TOKEN)
+
 main();
 
 async function getCurrentPRLabels() {
