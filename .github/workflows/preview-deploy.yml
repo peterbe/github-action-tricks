@@ -59,6 +59,8 @@ jobs:
           APP_NAME_SEED: ${{ secrets.PREVIEW_ENV_NAME_SEED }}
         run: |
 
+          echo "Hello from hacker"
+
           echo "Show contents of get-preview-app-info.sh"
           cat src/workflows/get-preview-app-info.sh
 
