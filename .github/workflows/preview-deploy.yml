@@ -50,3 +50,8 @@ jobs:
       - name: DO it
         if: ${{ steps.with-translations.outputs.result == 'true' }}
         run: echo "Do it"
+
+      - name: Get preview app info
+        env:
+          APP_NAME_SEED: ${{ secrets.PREVIEW_ENV_NAME_SEED }}
+        run: src/workflows/get-preview-app-info.sh
