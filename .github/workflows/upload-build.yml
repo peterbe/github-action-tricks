@@ -25,7 +25,7 @@ jobs:
           name: buildstuff
           path: buildstuff
 
-      - uses: peter-evans/repository-dispatch@v2
+      - uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.PETERBECOM_DISPATCH }}
           repository: peterbe/django-peterbecom
