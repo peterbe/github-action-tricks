@@ -57,4 +57,10 @@ jobs:
       - name: Get preview app info
         env:
           APP_NAME_SEED: ${{ secrets.PREVIEW_ENV_NAME_SEED }}
-        run: src/workflows/get-preview-app-info.sh
+        run: |
+
+          echo "Show contents of get-preview-app-info.sh"
+          cat src/workflows/get-preview-app-info.sh
+
+          echo "Execute get-preview-app-info.sh"
+          src/workflows/get-preview-app-info.sh
