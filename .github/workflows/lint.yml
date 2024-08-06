@@ -36,3 +36,36 @@ jobs:
           echo "rb=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.rb$" | xargs)" >> "$GITHUB_OUTPUT"
           echo "ts=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.ts$" | xargs)" >> "$GITHUB_OUTPUT"
           echo "tsx=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
+
+
+  changed-files-2:
+    runs-on: ubuntu-latest
+    outputs:
+      css: ${{ steps.files.outputs.css }}
+      erb: ${{ steps.files.outputs.erb }}
+      rb: ${{ steps.files.outputs.rb }}
+      ts: ${{ steps.files.outputs.ts }}
+      tsx: ${{ steps.files.outputs.tsx }}
+    steps:
+      - uses: tj-actions/changed-files@v44
+        id: changed-files
+        with:
+          # No need to escape the file names because we make the output of
+          # tj-actions/changed-files be set as an environment variable. Not
+          # as a direct input to the line of bash that uses it.
+          safe_output: false
+          files_ignore: |
+            node_modules/**
+      - name: Output changed files
+        id: files
+        env:
+          # Make it an environment variable so that its value doesn't need to be escaped.
+          # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+          CHANGED_FILES: |-
+            ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          echo "css=$(echo $CHANGED_FILES | grep -E "\.s?css$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "erb=$(echo $CHANGED_FILES | grep -E "\.html\.erb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "rb=$(echo $CHANGED_FILES | grep -E "\.rb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "ts=$(echo $CHANGED_FILES | grep -E "\.ts$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "tsx=$(echo $CHANGED_FILES | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
