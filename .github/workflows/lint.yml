@@ -79,6 +79,8 @@ jobs:
       - changed-files
       - changed-files-2
     steps:
+      - name: Basic git diff
+        run: git diff --name-only origin/main
       - name: List from changed-files
         run: |
 
