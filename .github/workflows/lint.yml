@@ -76,6 +76,42 @@ jobs:
       - changed-files
       - changed-files-2
     steps:
+      - name: List from changed-files
+        run: |
+
+          echo "CSS"
+          echo "${{ needs.changed-files.outputs.css }}"
+          echo ""
+          echo "ERB"
+          echo "${{ needs.changed-files.outputs.erb }}"
+          echo ""
+          echo "RB"
+          echo "${{ needs.changed-files.outputs.rb }}"
+          echo ""
+          echo "TS"
+          echo "${{ needs.changed-files.outputs.ts }}"
+          echo ""
+          echo "TSX"
+          echo "${{ needs.changed-files.outputs.tsx }}"
+
+      - name: List from changed-files-2
+        run: |
+
+          echo "CSS"
+          echo "${{ needs.changed-files-2.outputs.css }}"
+          echo ""
+          echo "ERB"
+          echo "${{ needs.changed-files-2.outputs.erb }}"
+          echo ""
+          echo "RB"
+          echo "${{ needs.changed-files-2.outputs.rb }}"
+          echo ""
+          echo "TS"
+          echo "${{ needs.changed-files-2.outputs.ts }}"
+          echo ""
+          echo "TSX"
+          echo "${{ needs.changed-files-2.outputs.tsx }}"
+
       - name: Compare
         run: |
           echo "css: ${{ needs.changed-files.outputs.css }} == ${{ needs.changed-files-2.outputs.css }}"
