@@ -1,0 +1,184 @@
+name: Lint
+
+on:
+  pull_request:
+
+jobs:
+  changed-files:
+    runs-on: ubuntu-latest
+    outputs:
+      css: ${{ steps.files.outputs.css }}
+      erb: ${{ steps.files.outputs.erb }}
+      rb: ${{ steps.files.outputs.rb }}
+      ts: ${{ steps.files.outputs.ts }}
+      tsx: ${{ steps.files.outputs.tsx }}
+    steps:
+      - uses: actions/github-script@v6
+        id: changes
+        with:
+          result-encoding: string
+          script: |
+            const result = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              per_page: 100
+            })
+            const files = await github.paginate(result)
+            return files.filter(f => {
+              return !(f['status'] === 'removed' || f['filename'].startsWith('node_modules'))
+            }).map((d) => d['filename']).join('\n')
+      - name: Output changed files
+        id: files
+        run: |
+          echo "css=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.s?css$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "erb=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.html\.erb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "rb=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.rb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "ts=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.ts$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "tsx=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
+
+
+  # Using actions/checkout
+  changed-files-2:
+    runs-on: ubuntu-latest
+    outputs:
+      css: ${{ steps.files.outputs.css }}
+      erb: ${{ steps.files.outputs.erb }}
+      rb: ${{ steps.files.outputs.rb }}
+      ts: ${{ steps.files.outputs.ts }}
+      tsx: ${{ steps.files.outputs.tsx }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: tj-actions/changed-files@v44
+        id: changed-files
+        with:
+          # No need to escape the file names because we make the output of
+          # tj-actions/changed-files be set as an environment variable. Not
+          # as a direct input to the line of bash that uses it.
+          safe_output: false
+          files_ignore: |
+            node_modules/**
+          separator: '\n'
+      - name: Output changed files
+        id: files
+        env:
+          # Make it an environment variable so that its value doesn't need to be escaped.
+          # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+          CHANGED_FILES: |-
+            ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          echo "css=$(echo -e "$CHANGED_FILES" | grep -E "\.s?css$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "erb=$(echo -e "$CHANGED_FILES" | grep -E "\.html\.erb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "rb=$(echo -e "$CHANGED_FILES" | grep -E "\.rb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "ts=$(echo -e "$CHANGED_FILES" | grep -E "\.ts$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "tsx=$(echo -e "$CHANGED_FILES" | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
+
+  # Not using actions/checkout
+  changed-files-3:
+    runs-on: ubuntu-latest
+    outputs:
+      css: ${{ steps.files.outputs.css }}
+      erb: ${{ steps.files.outputs.erb }}
+      rb: ${{ steps.files.outputs.rb }}
+      ts: ${{ steps.files.outputs.ts }}
+      tsx: ${{ steps.files.outputs.tsx }}
+    steps:
+      - uses: tj-actions/changed-files@v44
+        id: changed-files
+        with:
+          # No need to escape the file names because we make the output of
+          # tj-actions/changed-files be set as an environment variable. Not
+          # as a direct input to the line of bash that uses it.
+          safe_output: false
+          files_ignore: |
+            node_modules/**
+          separator: '\n'
+      - name: Output changed files
+        id: files
+        env:
+          # Make it an environment variable so that its value doesn't need to be escaped.
+          # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+          CHANGED_FILES: |-
+            ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          echo "css=$(echo -e "$CHANGED_FILES" | grep -E "\.s?css$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "erb=$(echo -e "$CHANGED_FILES" | grep -E "\.html\.erb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "rb=$(echo -e "$CHANGED_FILES" | grep -E "\.rb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "ts=$(echo -e "$CHANGED_FILES" | grep -E "\.ts$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "tsx=$(echo -e "$CHANGED_FILES" | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
+
+  compare:
+    runs-on: ubuntu-latest
+    needs:
+      - changed-files
+      - changed-files-2
+    steps:
+      - name: List from changed-files
+        run: |
+
+          echo "CSS"
+          echo "${{ needs.changed-files.outputs.css }}"
+          echo ""
+          echo "ERB"
+          echo "${{ needs.changed-files.outputs.erb }}"
+          echo ""
+          echo "RB"
+          echo "${{ needs.changed-files.outputs.rb }}"
+          echo ""
+          echo "TS"
+          echo "${{ needs.changed-files.outputs.ts }}"
+          echo ""
+          echo "TSX"
+          echo "${{ needs.changed-files.outputs.tsx }}"
+
+      - name: List from changed-files-2
+        run: |
+
+          echo "CSS"
+          echo "${{ needs.changed-files-2.outputs.css }}"
+          echo ""
+          echo "ERB"
+          echo "${{ needs.changed-files-2.outputs.erb }}"
+          echo ""
+          echo "RB"
+          echo "${{ needs.changed-files-2.outputs.rb }}"
+          echo ""
+          echo "TS"
+          echo "${{ needs.changed-files-2.outputs.ts }}"
+          echo ""
+          echo "TSX"
+          echo "${{ needs.changed-files-2.outputs.tsx }}"
+
+      - name: List from changed-files-3
+        run: |
+
+          echo "CSS"
+          echo "${{ needs.changed-files-3.outputs.css }}"
+          echo ""
+          echo "ERB"
+          echo "${{ needs.changed-files-3.outputs.erb }}"
+          echo ""
+          echo "RB"
+          echo "${{ needs.changed-files-3.outputs.rb }}"
+          echo ""
+          echo "TS"
+          echo "${{ needs.changed-files-3.outputs.ts }}"
+          echo ""
+          echo "TSX"
+          echo "${{ needs.changed-files-3.outputs.tsx }}"
+
+      - name: Compare
+        run: |
+          echo "css: ${{ needs.changed-files.outputs.css }} == ${{ needs.changed-files-2.outputs.css }}"
+          echo "erb: ${{ needs.changed-files.outputs.erb }} == ${{ needs.changed-files-2.outputs.erb }}"
+          echo "rb: ${{ needs.changed-files.outputs.rb }} == ${{ needs.changed-files-2.outputs.rb }}"
+          echo "ts: ${{ needs.changed-files.outputs.ts }} == ${{ needs.changed-files-2.outputs.ts }}"
+          echo "tsx: ${{ needs.changed-files.outputs.tsx }} == ${{ needs.changed-files-2.outputs.tsx }}"
+
+      - name: Compare (2 and 3)
+        run: |
+          echo "css: ${{ needs.changed-files-2.outputs.css }} == ${{ needs.changed-files-3.outputs.css }}"
+          echo "erb: ${{ needs.changed-files-2.outputs.erb }} == ${{ needs.changed-files-3.outputs.erb }}"
+          echo "rb: ${{ needs.changed-files-2.outputs.rb }} == ${{ needs.changed-files-3.outputs.rb }}"
+          echo "ts: ${{ needs.changed-files-2.outputs.ts }} == ${{ needs.changed-files-3.outputs.ts }}"
+          echo "tsx: ${{ needs.changed-files-2.outputs.tsx }} == ${{ needs.changed-files-3.outputs.tsx }}"
