@@ -75,6 +75,11 @@ jobs:
           echo "ts=$(echo -e $CHANGED_FILES | grep -E "\.ts$" | xargs)" >> "$GITHUB_OUTPUT"
           echo "tsx=$(echo -e $CHANGED_FILES | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
 
+          echo "TS"
+          echo $ts
+          echo "TSX"
+          echo $tsx
+
   compare:
     runs-on: ubuntu-latest
     needs:
