@@ -58,7 +58,7 @@ jobs:
           safe_output: false
           files_ignore: |
             node_modules/**
-          separator: "\n"
+          # separator: '\n'
       - name: Output changed files
         id: files
         env:
@@ -67,18 +67,12 @@ jobs:
           CHANGED_FILES: |-
             ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          echo -e $CHANGED_FILES
-          echo "----------------------------------"
-          echo "css=$(echo -e $CHANGED_FILES | grep -E "\.s?css$" | xargs)" >> "$GITHUB_OUTPUT"
-          echo "erb=$(echo -e $CHANGED_FILES | grep -E "\.html\.erb$" | xargs)" >> "$GITHUB_OUTPUT"
-          echo "rb=$(echo -e $CHANGED_FILES | grep -E "\.rb$" | xargs)" >> "$GITHUB_OUTPUT"
-          echo "ts=$(echo -e $CHANGED_FILES | grep -E "\.ts$" | xargs)" >> "$GITHUB_OUTPUT"
-          echo "tsx=$(echo -e $CHANGED_FILES | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
 
-          echo "TS"
-          echo $ts
-          echo "TSX"
-          echo $tsx
+          echo "css=$(echo "$CHANGED_FILES" | grep -E "\.css$")" >> "$GITHUB_OUTPUT"
+          echo "erb=$(echo "$CHANGED_FILES" | grep -E "\.html\.erb$")" >> "$GITHUB_OUTPUT"
+          echo "rb=$(echo "$CHANGED_FILES" | grep -E "\.rb$")" >> "$GITHUB_OUTPUT"
+          echo "ts=$(echo "$CHANGED_FILES" | grep -E "\.ts$")" >> "$GITHUB_OUTPUT"
+          echo "tsx=$(echo "$CHANGED_FILES" | grep -E "\.tsx$")" >> "$GITHUB_OUTPUT"
 
   compare:
     runs-on: ubuntu-latest
