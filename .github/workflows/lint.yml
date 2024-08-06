@@ -69,3 +69,17 @@ jobs:
           echo "rb=$(echo $CHANGED_FILES | grep -E "\.rb$" | xargs)" >> "$GITHUB_OUTPUT"
           echo "ts=$(echo $CHANGED_FILES | grep -E "\.ts$" | xargs)" >> "$GITHUB_OUTPUT"
           echo "tsx=$(echo $CHANGED_FILES | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
+
+  compare:
+    runs-on: ubuntu-latest
+    needs:
+      - changed-files
+      - changed-files-2
+    steps:
+      - name: Compare
+        run: |
+          echo "css: ${{ needs.changed-files.outputs.css }} == ${{ needs.changed-files-2.outputs.css }}"
+          echo "erb: ${{ needs.changed-files.outputs.erb }} == ${{ needs.changed-files-2.outputs.erb }}"
+          echo "rb: ${{ needs.changed-files.outputs.rb }} == ${{ needs.changed-files-2.outputs.rb }}"
+          echo "ts: ${{ needs.changed-files.outputs.ts }} == ${{ needs.changed-files-2.outputs.ts }}"
+          echo "tsx: ${{ needs.changed-files.outputs.tsx }} == ${{ needs.changed-files-2.outputs.tsx }}"
