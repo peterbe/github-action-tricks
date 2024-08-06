@@ -68,6 +68,24 @@ jobs:
             ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
 
+          # Filter by .css extension
+          css_files=$(echo "$CHANGED_FILES" | grep -E "\.css$")
+
+          # Filter by .rb extension
+          rb_files=$(echo "$CHANGED_FILES" | grep -E "\.rb$")
+
+          # Filter by .ts extension
+          ts_files=$(echo "$CHANGED_FILES" | grep -E "\.ts$")
+
+          # Filter by .tsx extension
+          tsx_files=$(echo "$CHANGED_FILES" | grep -E "\.tsx$")
+
+          # Print the filtered lists
+          echo "CSS Files: $css_files"
+          echo "RB Files: $rb_files"
+          echo "TS Files: $ts_files"
+          echo "TSX Files: $tsx_files"
+
           echo "css=$(echo "$CHANGED_FILES" | grep -E "\.css$")" >> "$GITHUB_OUTPUT"
           echo "erb=$(echo "$CHANGED_FILES" | grep -E "\.html\.erb$")" >> "$GITHUB_OUTPUT"
           echo "rb=$(echo "$CHANGED_FILES" | grep -E "\.rb$")" >> "$GITHUB_OUTPUT"
