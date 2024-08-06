@@ -38,6 +38,7 @@ jobs:
           echo "tsx=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
 
 
+  # Using actions/checkout
   changed-files-2:
     runs-on: ubuntu-latest
     outputs:
@@ -47,6 +48,7 @@ jobs:
       ts: ${{ steps.files.outputs.ts }}
       tsx: ${{ steps.files.outputs.tsx }}
     steps:
+      - uses: actions/checkout@v4
       - uses: tj-actions/changed-files@v44
         id: changed-files
         with:
@@ -56,6 +58,7 @@ jobs:
           safe_output: false
           files_ignore: |
             node_modules/**
+          separator: '\n'
       - name: Output changed files
         id: files
         env:
