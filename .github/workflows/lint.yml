@@ -67,13 +67,13 @@ jobs:
           CHANGED_FILES: |-
             ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
-          echo -e "$CHANGED_FILES"
+          echo -e $CHANGED_FILES
           echo "----------------------------------"
-          echo "css=$(echo $CHANGED_FILES | grep -E "\.s?css$" | xargs)" >> "$GITHUB_OUTPUT"
-          echo "erb=$(echo $CHANGED_FILES | grep -E "\.html\.erb$" | xargs)" >> "$GITHUB_OUTPUT"
-          echo "rb=$(echo $CHANGED_FILES | grep -E "\.rb$" | xargs)" >> "$GITHUB_OUTPUT"
-          echo "ts=$(echo $CHANGED_FILES | grep -E "\.ts$" | xargs)" >> "$GITHUB_OUTPUT"
-          echo "tsx=$(echo $CHANGED_FILES | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "css=$(echo -e $CHANGED_FILES | grep -E "\.s?css$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "erb=$(echo -e $CHANGED_FILES | grep -E "\.html\.erb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "rb=$(echo -e $CHANGED_FILES | grep -E "\.rb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "ts=$(echo -e $CHANGED_FILES | grep -E "\.ts$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "tsx=$(echo -e $CHANGED_FILES | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
 
   compare:
     runs-on: ubuntu-latest
