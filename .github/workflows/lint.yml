@@ -64,6 +64,8 @@ jobs:
           CHANGED_FILES: |-
             ${{ steps.changed-files.outputs.all_changed_files }}
         run: |
+          echo $CHANGED_FILES
+          echo "----------------------------------"
           echo "css=$(echo $CHANGED_FILES | grep -E "\.s?css$" | xargs)" >> "$GITHUB_OUTPUT"
           echo "erb=$(echo $CHANGED_FILES | grep -E "\.html\.erb$" | xargs)" >> "$GITHUB_OUTPUT"
           echo "rb=$(echo $CHANGED_FILES | grep -E "\.rb$" | xargs)" >> "$GITHUB_OUTPUT"
