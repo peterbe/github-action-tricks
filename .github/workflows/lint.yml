@@ -174,3 +174,11 @@ jobs:
           echo "rb: ${{ needs.changed-files.outputs.rb }} == ${{ needs.changed-files-2.outputs.rb }}"
           echo "ts: ${{ needs.changed-files.outputs.ts }} == ${{ needs.changed-files-2.outputs.ts }}"
           echo "tsx: ${{ needs.changed-files.outputs.tsx }} == ${{ needs.changed-files-2.outputs.tsx }}"
+
+      - name: Compare (2 and 3)
+        run: |
+          echo "css: ${{ needs.changed-files-2.outputs.css }} == ${{ needs.changed-files-3.outputs.css }}"
+          echo "erb: ${{ needs.changed-files-2.outputs.erb }} == ${{ needs.changed-files-3.outputs.erb }}"
+          echo "rb: ${{ needs.changed-files-2.outputs.rb }} == ${{ needs.changed-files-3.outputs.rb }}"
+          echo "ts: ${{ needs.changed-files-2.outputs.ts }} == ${{ needs.changed-files-3.outputs.ts }}"
+          echo "tsx: ${{ needs.changed-files-2.outputs.tsx }} == ${{ needs.changed-files-3.outputs.tsx }}"
