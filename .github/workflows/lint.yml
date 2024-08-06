@@ -28,6 +28,9 @@ jobs:
             return files.filter(f => {
               return !(f['status'] === 'removed' || f['filename'].startsWith('node_modules'))
             }).map((d) => d['filename']).join('\n')
+
+            // CURIOUS!
+            console.log({files})
       - name: Output changed files
         id: files
         run: |
