@@ -1,0 +1,38 @@
+name: Lint
+
+on:
+  pull_request:
+
+jobs:
+  changed-files:
+    runs-on: ubuntu-latest
+    outputs:
+      css: ${{ steps.files.outputs.css }}
+      erb: ${{ steps.files.outputs.erb }}
+      rb: ${{ steps.files.outputs.rb }}
+      ts: ${{ steps.files.outputs.ts }}
+      tsx: ${{ steps.files.outputs.tsx }}
+    steps:
+      - uses: actions/github-script@v6
+        id: changes
+        with:
+          result-encoding: string
+          script: |
+            const result = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              per_page: 100
+            })
+            const files = await github.paginate(result)
+            return files.filter(f => {
+              return !(f['status'] === 'removed' || f['filename'].startsWith('node_modules'))
+            }).map((d) => d['filename']).join('\n')
+      - name: Output changed files
+        id: files
+        run: |
+          echo "css=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.s?css$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "erb=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.html\.erb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "rb=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.rb$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "ts=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.ts$" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "tsx=$(echo "${{ steps.changes.outputs.result }}" | grep -E "\.tsx$" | xargs)" >> "$GITHUB_OUTPUT"
