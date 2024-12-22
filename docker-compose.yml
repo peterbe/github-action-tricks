@@ -1,0 +1,45 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    volumes:
+      - $PWD:/code
+    command: web-dev
+
+  # From
+  # https://medium.com/@TimvanBaarsen/how-to-run-an-elasticsearch-7-x-single-node-cluster-for-local-development-using-docker-compose-2b7ab73d8b82
+  # but without a volume
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+    container_name: elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - ingest.geoip.downloader.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    # volumes:
+    #   - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      # - 9300:9300
+
+  demo:
+    build: demo
+    ports:
+      - "4000:4000"
+    environment:
+      - DEMO_PROXY_HOST=web
+    # command: web-dev
