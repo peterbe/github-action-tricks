@@ -6,7 +6,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 RUN useradd --create-home --user-group github
 USER github
-WORKDIR /code/
+WORKDIR /code
 
 # COPY ./pyproject.toml ./uv.lock* ./src ./bin /code/
 COPY ./pyproject.toml /code/pyproject.toml
@@ -24,6 +24,7 @@ COPY ./bin /code/bin
 # COPY ./uv.lock ./uv.lock
 RUN uv sync --frozen
 
+RUN touch test.txt
 # RUN uv sync
 RUN ls -l .venv
 RUN ls -l .venv/bin/activate
