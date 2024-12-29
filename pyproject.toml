@@ -1,0 +1,35 @@
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+# Add the `line-too-long` rule to the enforced rule set.
+extend-ignore = ["E501"]
+extend-select = ["E", "F", "W"]
+
+[tool.uv]
+dev-dependencies = []
+
+[project]
+name = "tricks"
+version = "0.0.0"
+description = "bla"
+readme = "README.md"
+# This needs to match .github/actions/setup-python/action.yml
+requires-python = "==3.12.*"
+dependencies = [
+    "elasticsearch-dsl==8.17.0",
+    "python-decouple==3.8",
+    "fastapi==0.115.6",
+    "starlette==0.41.3",
+    "uvicorn[standard]==0.23.2",
+    "selectolax==0.3.27",
+    "click==8.1.7",
+    "python-dateutil==2.9.0.post0",
+    "gunicorn==23.0.0",
+    "requests==2.32.3",
+    "cachetools==5.5.0",
+    # Dev things
+    "pytest==8.3.4",
+    "httpx==0.28.1",
+    "ruff==0.8.4"
+]

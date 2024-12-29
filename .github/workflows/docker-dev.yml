@@ -1,0 +1,63 @@
+name: Docker dev environment
+
+# What a developer with docker compose would do.
+
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: What version of docker compose?
+        run: docker compose --version
+
+      - name: What version of docker?
+        run: docker --version
+
+      - run: docker compose build
+
+      - name: Start in background
+        run: docker compose up -d
+
+      - name: Ping the servers
+        run: |
+
+          # They all have to work
+          set -e
+
+          # Give everything a couple of seconds to wake up fully
+          sleep 3
+
+          docker compose ps
+
+          # Server
+          curl --retry-connrefused --retry 5 http://localhost:8000/
+
+      - name: Debug possible ping failure
+        if: ${{ failure() }}
+        run: |
+          docker compose ps
+          echo "ALL............................................"
+          docker compose logs
+          echo "Web............................................"
+          docker compose logs web
+
+      - name: docker compose run to index
+        run: |
+          set -e
+          echo "[]" >> pages.json
+          docker compose run web index pages.json
+
+      - name: Ping URLs
+        run: |
+          # Server
+          curl --fail http://localhost:8000/
