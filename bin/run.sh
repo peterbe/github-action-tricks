@@ -37,7 +37,7 @@ case $1 in
     echo ""
 
     echo "HERE IN WEB-DEV"
-    ls -l
+    ls -la
     echo "END OF LS"
     setup_python
     # uv run uvicorn src.main:app --reload --host 0.0.0.0 --port ${PORT}

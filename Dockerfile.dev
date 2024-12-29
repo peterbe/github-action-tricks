@@ -8,11 +8,11 @@ RUN useradd --create-home --user-group github
 USER github
 WORKDIR /code
 
-# COPY ./pyproject.toml ./uv.lock* ./src ./bin /code/
-COPY ./pyproject.toml /code/pyproject.toml
-COPY ./uv.lock /code/uv.lock
-COPY ./src /code/src
-COPY ./bin /code/bin
+COPY ./pyproject.toml ./uv.lock* ./src ./bin /code/
+# COPY ./pyproject.toml /code/pyproject.toml
+# COPY ./uv.lock /code/uv.lock
+# COPY ./src /code/src
+# COPY ./bin /code/bin
 
 # COPY ./pyproject.toml ./uv.lock* ./src ./bin /code/
 # COPY ./pyproject.toml ./uv.lock* ./src ./bin /code/
@@ -24,15 +24,9 @@ COPY ./bin /code/bin
 # COPY ./uv.lock ./uv.lock
 RUN uv sync --frozen
 
-RUN touch test.txt
-# RUN uv sync
 RUN ls -l .venv
 RUN ls -l .venv/bin/activate
 RUN ls -l /code/.venv/bin/activate
-# ENV PATH="/home/github/.local/bin:${PATH}"
-
-#COPY ./src /code/src
-#COPY ./bin /code/bin
 
 ENV PORT=8000
 
