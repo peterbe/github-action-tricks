@@ -54,7 +54,7 @@ jobs:
       - name: docker compose run to index
         run: |
           set -e
-          echo "[]"" >> pages.json
+          echo "[]" >> pages.json
           docker compose run web index pages.json
 
       - name: Ping URLs
