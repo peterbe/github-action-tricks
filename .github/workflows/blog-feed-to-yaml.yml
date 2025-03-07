@@ -57,8 +57,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Close existing PR
         run: |
           gh pr close blog-feed-update --comment "This PR was automatically closed by The Hub Bot. It was replaced by a new PR."
