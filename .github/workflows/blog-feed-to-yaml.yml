@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 # Only one instance of this workflow can run at a time since it can depend on the previous run's committed changes
 concurrency:
