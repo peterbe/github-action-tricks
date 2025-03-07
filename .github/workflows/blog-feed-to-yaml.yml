@@ -24,8 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run script to post new articles to Chatterbox, which posts to Slack
-        working-directory: .github/actions/js
+      - name: Save file
         run: |
           curl https://github.blog/feed/ | grep title > blog-feed.txt
 
