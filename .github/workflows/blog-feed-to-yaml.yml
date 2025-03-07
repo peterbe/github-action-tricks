@@ -56,8 +56,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: blog-feed-update
       - name: Create PR
         if: ${{ github.event_name != 'pull_request' }}
         uses: peter-evans/create-pull-request@v4
