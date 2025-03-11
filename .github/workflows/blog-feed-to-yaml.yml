@@ -55,7 +55,7 @@ jobs:
     timeout-minutes: 30
     needs: blog-feed-to-yaml
     env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.BLOG_FEED_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - name: Close existing PR
