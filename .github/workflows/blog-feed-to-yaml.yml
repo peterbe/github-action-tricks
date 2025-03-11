@@ -60,7 +60,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Close existing PR
         run: |
-          gh pr close blog-feed-update --comment "This PR was automatically closed by The Hub Bot. It was replaced by a new PR."
+          gh pr close blog-feed-update --comment "This PR was automatically closed by The Hub Bot. It was replaced by a new PR." || echo "Couldn't be closed"
       - name: Create new PR
         run: |
           gh pr create --base main --head blog-feed-update \
