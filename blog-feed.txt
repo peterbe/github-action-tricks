@@ -1,5 +1,6 @@
 	<title>The GitHub Blog</title>
 	<title>The GitHub Blog</title>
+		<title>Why Java endures: The foundation of modern enterprise development</title>
 		<title>Full exposure: A practical approach to handling sensitive data leaks</title>
 		<title>Four steps toward building an open source community</title>
 		<title>Video: How to run dependency audits with GitHub Copilot</title>
@@ -9,4 +10,3 @@
 		<title>Community managers in action: Leading a developer community for good</title>
 		<title>How to debug code with GitHub Copilot</title>
 		<title>Engaging with the developer community on our approach to content moderation</title>
-		<title>Support the open source projects you love this Valentine’s Day</title>
