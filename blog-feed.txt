@@ -1,5 +1,6 @@
 	<title>The GitHub Blog</title>
 	<title>The GitHub Blog</title>
+		<title>How GitHub engineers learn new codebases</title>
 		<title>Sign in as anyone: Bypassing SAML SSO authentication with parser differentials</title>
 		<title>GitHub Availability Report: February 2025</title>
 		<title>Why Java endures: The foundation of modern enterprise development</title>
@@ -9,4 +10,3 @@
 		<title>Not just for developers: How product and security teams can use GitHub Copilot</title>
 		<title>Finding leaked passwords with AI: How we built Copilot secret scanning</title>
 		<title>GitHub for Beginners: How to get started with GitHub Copilot</title>
-		<title>Community managers in action: Leading a developer community for good</title>
