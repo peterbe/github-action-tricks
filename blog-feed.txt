@@ -1,5 +1,7 @@
 	<title>The GitHub Blog</title>
 	<title>The GitHub Blog</title>
+		<title>Sign in as anyone: Bypassing SAML SSO authentication with parser differentials</title>
+		<title>GitHub Availability Report: February 2025</title>
 		<title>Why Java endures: The foundation of modern enterprise development</title>
 		<title>Full exposure: A practical approach to handling sensitive data leaks</title>
 		<title>Four steps toward building an open source community</title>
@@ -8,5 +10,3 @@
 		<title>Finding leaked passwords with AI: How we built Copilot secret scanning</title>
 		<title>GitHub for Beginners: How to get started with GitHub Copilot</title>
 		<title>Community managers in action: Leading a developer community for good</title>
-		<title>How to debug code with GitHub Copilot</title>
-		<title>Engaging with the developer community on our approach to content moderation</title>
