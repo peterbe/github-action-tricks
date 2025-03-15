@@ -1,5 +1,6 @@
 	<title>The GitHub Blog</title>
 	<title>The GitHub Blog</title>
+		<title>Highlights from Git 2.49</title>
 		<title>How GitHub engineers learn new codebases</title>
 		<title>Sign in as anyone: Bypassing SAML SSO authentication with parser differentials</title>
 		<title>GitHub Availability Report: February 2025</title>
@@ -9,4 +10,3 @@
 		<title>Video: How to run dependency audits with GitHub Copilot</title>
 		<title>Not just for developers: How product and security teams can use GitHub Copilot</title>
 		<title>Finding leaked passwords with AI: How we built Copilot secret scanning</title>
-		<title>GitHub for Beginners: How to get started with GitHub Copilot</title>
